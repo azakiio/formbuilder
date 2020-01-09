@@ -39,3 +39,50 @@ textarea {
     overflow: hidden;
     background-color: #f1f1f1;
 }
+
+
+
+/* Test */
+body.dragging,
+body.dragging * {
+    cursor: move !important;
+}
+
+.dragged {
+    position: absolute;
+    opacity: 0.5;
+    z-index: 2000;
+}
+
+ol.example li {
+    cursor: pointer;
+    display: block;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #cccccc;
+    color: #0088cc;
+    background: #eeeeee;
+}
+
+ol {
+    list-style-type: none;
+    counter-reset: item;
+}
+
+ol>li {
+    counter-increment: item;
+    margin-bottom: 0.6em;
+}
+
+ol>li:before {
+    content: counters(item, ".") ". ";
+    padding-right: 0.6em;
+}
+
+li ol>li {
+    margin: 0;
+}
+
+li ol>li:before {
+    content: counters(item, ".") " ";
+}

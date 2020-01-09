@@ -2,9 +2,12 @@ var index = 1
 
 var tx = document.getElementsByTagName('textarea');
 for (var i = 0; i < tx.length; i++) {
-    //tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
     tx[i].addEventListener("input", OnInput, false);
 }
+
+$(function () {
+    $("ol.example").sortable();
+});
 
 function OnInput() {
     this.style.height = 'auto';
@@ -27,16 +30,32 @@ for (var i = 0; i < coll.length; i++) {
 
 function textAnswer(index, question) {
     var form = document.getElementById("form")
+    var item = document.createElement("li")
+    var sublist = document.createElement("ol")
     var input = document.createElement("input");
     input.type = "text";
     input.name = index;
     var label = document.createElement("label");
     label.setAttribute("for", index);
-    label.innerText = index + ". " + question
-    form.appendChild(label)
-    form.appendChild(input)
-    form.innerHTML += "<br>"
+    label.innerText = question
+    item.appendChild(label)
+    item.appendChild(input)
+    item.appendChild(sublist)
+    form.appendChild(item)
 }
+
+// function textAnswer(index, question) {
+//     var form = document.getElementById("form")
+//     var input = document.createElement("input");
+//     input.type = "text";
+//     input.name = index;
+//     var label = document.createElement("label");
+//     label.setAttribute("for", index);
+//     label.innerText = index + ". " + question
+//     form.appendChild(label)
+//     form.appendChild(input)
+//     form.innerHTML += "<br>"
+// }
 
 function radioAnswer(index, question, answers) {
     var form = document.getElementById("form");
