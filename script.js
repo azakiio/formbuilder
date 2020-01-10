@@ -44,24 +44,11 @@ function textAnswer(index, question) {
     form.appendChild(item)
 }
 
-// function textAnswer(index, question) {
-//     var form = document.getElementById("form")
-//     var input = document.createElement("input");
-//     input.type = "text";
-//     input.name = index;
-//     var label = document.createElement("label");
-//     label.setAttribute("for", index);
-//     label.innerText = index + ". " + question
-//     form.appendChild(label)
-//     form.appendChild(input)
-//     form.innerHTML += "<br>"
-// }
-
 function radioAnswer(index, question, answers) {
     var form = document.getElementById("form");
-    var title = document.createElement("p");
-    title.innerText = index + ". " + question
-    form.appendChild(title)
+    var item = document.createElement("li")
+    var sublist = document.createElement("ol")
+    item.innerHTML = question + "<br>"
 
     var temp = answers.split(/\r?\n/);
     for (a of temp) {
@@ -71,26 +58,33 @@ function radioAnswer(index, question, answers) {
         var label = document.createElement("label");
         label.setAttribute("for", index);
         label.innerText = a
-        form.appendChild(label)
-        form.appendChild(input)
+
+        item.appendChild(label)
+        item.appendChild(input)
     }
-    form.innerHTML += "<br>"
+    item.appendChild(sublist)
+    form.appendChild(item)
+
 }
 
 function boxAnswer(index, question, answers) {
     var form = document.getElementById("form");
-    var title = document.createElement("p");
-    title.innerText = index + ". " + question
-    form.appendChild(title)
-    for (a of answers) {
+    var item = document.createElement("li")
+    var sublist = document.createElement("ol")
+    item.innerHTML = question + "<br>"
+
+    var temp = answers.split(/\r?\n/);
+    for (a of temp) {
         var input = document.createElement("input");
         input.type = "checkbox";
         input.name = index;
         var label = document.createElement("label");
         label.setAttribute("for", index);
         label.innerText = a
-        form.appendChild(label)
-        form.appendChild(input)
+
+        item.appendChild(label)
+        item.appendChild(input)
     }
-    form.innerHTML += "<br>"
+    item.appendChild(sublist)
+    form.appendChild(item)
 }

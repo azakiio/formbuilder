@@ -1,13 +1,15 @@
 .wrapper {
     display: flex;
+    justify-content: space-between;
 }
 
 .left {
-    flex-basis: 50%;
+    flex-basis: 60%;
+    max-width: 700px;
 }
 
 .right {
-    flex-basis: 50%;
+    flex-basis: 40%;
 }
 
 textarea {
