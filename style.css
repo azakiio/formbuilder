@@ -4,12 +4,12 @@
 }
 
 .left {
-    flex-basis: 60%;
+    flex-basis: 70%;
     max-width: 700px;
 }
 
 .right {
-    flex-basis: 40%;
+    flex-basis: 30%;
 }
 
 textarea {
@@ -40,6 +40,18 @@ textarea {
     display: none;
     overflow: hidden;
     background-color: #f1f1f1;
+}
+
+label {
+    display: block;
+}
+
+textarea {
+    margin-bottom: 10px;
+}
+
+.delbtn {
+    float: right;
 }
 
 

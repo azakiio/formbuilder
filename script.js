@@ -1,4 +1,4 @@
-var index = 1
+var index = 0;
 
 var tx = document.getElementsByTagName('textarea');
 for (var i = 0; i < tx.length; i++) {
@@ -6,7 +6,9 @@ for (var i = 0; i < tx.length; i++) {
 }
 
 $(function () {
-    $("ol.example").sortable();
+    $("ol.example").sortable({
+        distance: 100
+    });
 });
 
 function OnInput() {
@@ -32,58 +34,55 @@ function textAnswer(index, question) {
     var form = document.getElementById("form")
     var item = document.createElement("li")
     var sublist = document.createElement("ol")
+    item.appendChild(document.createTextNode(question))
+
+    var delbtn = document.createElement("button")
+    delbtn.innerText = "Delete"
+    delbtn.setAttribute("class", "delbtn")
+    delbtn.onclick = function () {
+        item.parentNode.removeChild(item);
+    }
+    item.appendChild(delbtn)
+
+    var delbtn = document.createElement("button")
+    delbtn.innerText = "Delete"
+    delbtn.setAttribute("class", "delbtn")
+    delbtn.onclick = function () {
+        item.parentNode.removeChild(item);
+    }
+    item.appendChild(delbtn)
+
     var input = document.createElement("input");
     input.type = "text";
-    input.name = index;
-    var label = document.createElement("label");
-    label.setAttribute("for", index);
-    label.innerText = question
-    item.appendChild(label)
+    input.name = index
     item.appendChild(input)
     item.appendChild(sublist)
     form.appendChild(item)
 }
 
-function radioAnswer(index, question, answers) {
+function otherAnswer(index, type, question, answers) {
     var form = document.getElementById("form");
     var item = document.createElement("li")
     var sublist = document.createElement("ol")
-    item.innerHTML = question + "<br>"
+    item.appendChild(document.createTextNode(question))
 
-    var temp = answers.split(/\r?\n/);
-    for (a of temp) {
-        var input = document.createElement("input");
-        input.type = "radio";
-        input.name = index;
-        var label = document.createElement("label");
-        label.setAttribute("for", index);
-        label.innerText = a
-
-        item.appendChild(label)
-        item.appendChild(input)
+    var delbtn = document.createElement("button")
+    delbtn.innerText = "Delete"
+    delbtn.setAttribute("class", "delbtn")
+    delbtn.onclick = function () {
+        item.parentNode.removeChild(item);
     }
-    item.appendChild(sublist)
-    form.appendChild(item)
-
-}
-
-function boxAnswer(index, question, answers) {
-    var form = document.getElementById("form");
-    var item = document.createElement("li")
-    var sublist = document.createElement("ol")
-    item.innerHTML = question + "<br>"
+    item.appendChild(delbtn)
 
     var temp = answers.split(/\r?\n/);
     for (a of temp) {
         var input = document.createElement("input");
-        input.type = "checkbox";
+        input.type = type;
         input.name = index;
         var label = document.createElement("label");
-        label.setAttribute("for", index);
-        label.innerText = a
-
+        label.appendChild(input)
+        label.appendChild(document.createTextNode(a))
         item.appendChild(label)
-        item.appendChild(input)
     }
     item.appendChild(sublist)
     form.appendChild(item)

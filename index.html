@@ -24,28 +24,28 @@
             <button type="button" class="collapsible">Text Answer</button>
             <div class="content">
                 <label>Question: </label>
-                <textarea id="textQuestion"></textarea><br>
+                <textarea id="textQuestion" cols="40"></textarea><br>
                 <button onclick='textAnswer(index, document.getElementById("textQuestion").value); index++'>Add</button>
             </div>
 
             <button type="button" class="collapsible">Radio Answer</button>
             <div class="content">
                 <label>Question: </label>
-                <textarea id="radioQuestion"></textarea><br>
+                <textarea id="radioQuestion" cols="40"></textarea><br>
                 <label>Answers: </label>
-                <textarea id="radioAnswers"></textarea><br>
+                <textarea id="radioAnswers" cols="40"></textarea><br>
                 <button
-                    onclick='radioAnswer(index, document.getElementById("radioQuestion").value, document.getElementById("radioAnswers").value); index++'>Add</button>
+                    onclick='otherAnswer(index, "radio", document.getElementById("radioQuestion").value, document.getElementById("radioAnswers").value); index++'>Add</button>
             </div>
 
             <button type="button" class="collapsible">Checkbox Answer</button>
             <div class="content">
                 <label>Question: </label>
-                <textarea id="boxQuestion"></textarea><br>
+                <textarea id="boxQuestion" cols="40"></textarea><br>
                 <label>Answers: </label>
-                <textarea id="boxAnswers"></textarea><br>
+                <textarea id="boxAnswers" cols="40"></textarea><br>
                 <button
-                    onclick='boxAnswer(index, document.getElementById("boxQuestion").value, document.getElementById("boxAnswers").value); index++'>Add</button>
+                    onclick='otherAnswer(index, "checkbox", document.getElementById("boxQuestion").value, document.getElementById("boxAnswers").value); index++'>Add</button>
             </div>
 
         </div>
