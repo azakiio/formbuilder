@@ -44,14 +44,6 @@ function textAnswer(index, question) {
     }
     item.appendChild(delbtn)
 
-    var delbtn = document.createElement("button")
-    delbtn.innerText = "Delete"
-    delbtn.setAttribute("class", "delbtn")
-    delbtn.onclick = function () {
-        item.parentNode.removeChild(item);
-    }
-    item.appendChild(delbtn)
-
     var input = document.createElement("input");
     input.type = "text";
     input.name = index
