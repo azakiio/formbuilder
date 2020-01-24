@@ -66,6 +66,19 @@ function otherAnswer(index, type, question, answers) {
     }
     item.appendChild(delbtn)
 
+    var condbtn = document.createElement("button")
+    condbtn.innerText = "Conditional"
+    condbtn.onclick = function () {
+        for (answer of item.parentNode.parentNode.childNodes){
+            if (answer.nodeName == "LABEL"){
+                console.log(answer.innerText)
+            }
+        }
+        return false;
+    }
+    item.appendChild(condbtn)
+
+
     var temp = answers.split(/\r?\n/);
     for (a of temp) {
         var input = document.createElement("input");
