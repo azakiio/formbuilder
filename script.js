@@ -69,8 +69,8 @@ function otherAnswer(index, type, question, answers) {
     var condbtn = document.createElement("button")
     condbtn.innerText = "Conditional"
     condbtn.onclick = function () {
-        for (answer of item.parentNode.parentNode.childNodes){
-            if (answer.nodeName == "LABEL"){
+        for (answer of item.parentNode.parentNode.childNodes) {
+            if (answer.nodeName == "LABEL") {
                 console.log(answer.innerText)
             }
         }
