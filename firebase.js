@@ -11,7 +11,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
-var ref = database.ref("form-list");
+var ref = database.ref("/form-list");
 ref.on('value', gotData, errData);
 
 
@@ -20,13 +20,12 @@ function gotData(data) {
     var keys = Object.keys(forms);
     var ol = document.getElementById("formList")
     ol.innerHTML = ""
-    for (var i = 0; i < keys.length; i++){
+    for (var i = 0; i < keys.length; i++) {
         let k = keys[i];
         var name = forms[k].name;
-        var content = forms[k].content;
         var li = document.createElement("li");
         var link = document.createElement("a");
-        link.href = "index.html?k=" + k
+        link.href = "formbuilder.html?k=" + k
         link.innerText = name
         li.appendChild(link)
         ol.appendChild(li)
@@ -34,11 +33,31 @@ function gotData(data) {
 }
 
 
-
 function errData(err) {
     console.log("Error");
     console.log(err);
 }
+
+
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+  
+      document.getElementById("user_div").style.display = "block";
+      document.getElementById("login_div").style.display = "none";
+      ref.on('value', gotData, errData);
+      
+    } else {
+      // No user is signed in.
+  
+      document.getElementById("user_div").style.display = "none";
+      document.getElementById("login_div").style.display = "block";
+  
+    }
+  }); 
+
+
+
 
 function newForm(formName) {
     var data = {
@@ -47,3 +66,19 @@ function newForm(formName) {
     }
     ref.push(data)
 }
+
+
+function login() {
+    var email = document.getElementById("email").value
+    var password = document.getElementById("password").value
+
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+        console.log(error.code)
+        console.log(error.message)
+        window.alert(error.message)
+    });
+}
+
+function logout(){
+    firebase.auth().signOut();
+  }

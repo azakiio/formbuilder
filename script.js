@@ -7,7 +7,7 @@ for (var i = 0; i < tx.length; i++) {
 
 $(function () {
     $("ol.example").sortable({
-        distance: 100
+        distance: 10
     });
 });
 
@@ -15,6 +15,59 @@ function OnInput() {
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight) + 'px';
 }
+
+var firebaseConfig = {
+    apiKey: "AIzaSyAltMfeb-pzQUfQz-pfTnh2jfwBFVzhPq0",
+    authDomain: "ohforms.firebaseapp.com",
+    databaseURL: "https://ohforms.firebaseio.com",
+    projectId: "ohforms",
+    storageBucket: "ohforms.appspot.com",
+    messagingSenderId: "1039072712651",
+    appId: "1:1039072712651:web:42c05751974f27287b084e",
+    measurementId: "G-5T2BPCY1LF"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+var userId = window.location.search.slice(3)
+const targetNode = document.getElementById('form');
+var currtime = window.performance.now()
+
+firebase.database().ref('/form-list/' + userId).once('value').then(function (snapshot) {
+    targetNode.innerHTML = snapshot.val().content
+});
+
+function save() {
+    firebase.database().ref('/form-list/' + userId)
+        .update({
+            content: targetNode.innerHTML
+        });
+}
+
+
+// Options for the observer (which mutations to observe)
+// const config = {
+//     childList: true
+// };
+
+// // Callback function to execute when mutations are observed
+// const callback = function (mutationsList) {
+//     difference = window.performance.now() - currtime
+//     if (difference > 10000) {
+//         currtime = window.performance.now()
+//         firebase.database().ref('/form-list/' + userId)
+//             .update({
+//                 content: targetNode.innerHTML
+//             });
+//     }
+// };
+
+// // Create an observer instance linked to the callback function
+// const observer = new MutationObserver(callback);
+
+// // Start observing the target node for configured mutations
+// observer.observe(targetNode, config);
+
+
 
 var coll = document.getElementsByClassName("collapsible");
 for (var i = 0; i < coll.length; i++) {
