@@ -1,21 +1,3 @@
-var index = 0;
-
-var tx = document.getElementsByTagName('textarea');
-for (var i = 0; i < tx.length; i++) {
-    tx[i].addEventListener("input", OnInput, false);
-}
-
-$(function () {
-    $("ol.example").sortable({
-        distance: 10
-    });
-});
-
-function OnInput() {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 'px';
-}
-
 var firebaseConfig = {
     apiKey: "AIzaSyAltMfeb-pzQUfQz-pfTnh2jfwBFVzhPq0",
     authDomain: "ohforms.firebaseapp.com",
@@ -28,100 +10,83 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-var formID = window.location.search.slice(3)
-const targetNode = document.getElementById('form');
-var currtime = window.performance.now()
+var database = firebase.database();
+var ref = database.ref("/form-list");
+ref.on('value', gotData, errData);
 
-firebase.database().ref('/form-list/' + formID).once('value').then(function (snapshot) {
-    targetNode.innerHTML = snapshot.val().content
-    setbtns()
-});
 
-function save() {
-    firebase.database().ref('/form-list/' + formID)
-        .update({
-            content: targetNode.innerHTML
-        });
+function gotData(data) {
+    var forms = data.val();
+    var keys = Object.keys(forms);
+    var ol = document.getElementById("formList")
+    ol.innerHTML = ""
+    for (var i = 0; i < keys.length; i++) {
+        let k = keys[i];
+        var name = forms[k].name;
+        var li = document.createElement("li");
+
+        var link = document.createElement("a");
+        link.href = "/formbuilder/?k=" + k
+
+        var delbtn = document.createElement("img")
+        delbtn.src = "/assets/icons8-delete.svg"
+        delbtn.setAttribute("class", "delbtn")
+        delbtn.onclick = function(){
+            database.ref("/form-list/"+k).remove()
+
+        }
+
+        link.innerText = name
+        li.appendChild(link)
+        li.appendChild(delbtn)
+        ol.appendChild(li)
+    }
 }
 
-var coll = document.getElementsByClassName("collapsible");
-for (var i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
-        }
+
+function errData(err) {
+    console.log("Error");
+    console.log(err);
+}
+
+
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+  
+      document.getElementById("user_div").style.display = "block";
+      document.getElementById("login_div").style.display = "none";
+      ref.on('value', gotData, errData);
+      
+    } else {
+      // No user is signed in.
+  
+      document.getElementById("user_div").style.display = "none";
+      document.getElementById("login_div").style.display = "block";
+  
+    }
+  }); 
+
+function newForm(formName) {
+    var data = {
+        name: formName,
+        content: ""
+    }
+    ref.push(data)
+}
+
+
+function login() {
+    var email = document.getElementById("email").value
+    var password = document.getElementById("password").value
+
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+        console.log(error.code)
+        console.log(error.message)
+        window.alert(error.message)
     });
 }
 
-function textAnswer(index, question) {
-    var form = document.getElementById("form")
-    var item = document.createElement("li")
-    var sublist = document.createElement("ol")
-    item.appendChild(document.createTextNode(question))
-
-    var delbtn = document.createElement("button")
-    delbtn.innerText = "Delete"
-    delbtn.setAttribute("class", "delbtn")
-    item.appendChild(delbtn)
-
-    var input = document.createElement("input");
-    input.type = "text";
-    input.name = index
-    item.appendChild(input)
-    item.appendChild(sublist)
-    form.appendChild(item)
-    setbtns()
-}
-
-function otherAnswer(index, type, question, answers) {
-    var form = document.getElementById("form");
-    var item = document.createElement("li")
-    var sublist = document.createElement("ol")
-    item.appendChild(document.createTextNode(question))
-
-    var delbtn = document.createElement("img")
-    delbtn.src = "icons8-delete.svg"
-    delbtn.setAttribute("class", "delbtn")
-    item.appendChild(delbtn)
-
-    var temp = answers.split(/\r?\n/);
-    for (a of temp) {
-        var input = document.createElement("input");
-        input.type = type;
-        input.name = index;
-        var label = document.createElement("label");
-        label.appendChild(input)
-        label.appendChild(document.createTextNode(a))
-        item.appendChild(label)
-        item.appendChild(document.createElement("ol"))
-    }
-    item.appendChild(document.createElement("hr"))
-    item.appendChild(sublist)
-    form.appendChild(item)
-    setbtns()
-}
-
-function section(title){
-    var form = document.getElementById("form")
-    var item = document.createElement("li")
-    var sublist = document.createElement("ol")
-    item.appendChild(document.createTextNode(title)) 
-    item.appendChild(sublist)
-    form.appendChild(item)
-    setbtns()
-}
-
-function setbtns() {
-    delbtns = document.getElementsByClassName("delbtn")
-    for (let delbtn of delbtns) {
-        delbtn.onclick = function () {
-            item = delbtn.parentNode
-            item.parentNode.removeChild(item);
-            return false;
-        }
-    }
-}
+function logout(){
+    firebase.auth().signOut();
+  }
