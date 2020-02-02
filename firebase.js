@@ -24,10 +24,21 @@ function gotData(data) {
         let k = keys[i];
         var name = forms[k].name;
         var li = document.createElement("li");
+
         var link = document.createElement("a");
         link.href = "formbuilder.html?k=" + k
+
+        var delbtn = document.createElement("img")
+        delbtn.src = "icons8-delete.svg"
+        delbtn.setAttribute("class", "delbtn")
+        delbtn.onclick = function(){
+            database.ref("/form-list/"+k).remove()
+
+        }
+
         link.innerText = name
         li.appendChild(link)
+        li.appendChild(delbtn)
         ol.appendChild(li)
     }
 }
@@ -55,9 +66,6 @@ firebase.auth().onAuthStateChanged(function(user) {
   
     }
   }); 
-
-
-
 
 function newForm(formName) {
     var data = {

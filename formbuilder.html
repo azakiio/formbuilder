@@ -14,6 +14,7 @@
     <div class="wrapper">
         <div class="left">
             <h1>Form Builder</h1>
+            <button onclick="save()">Save</button>
             <form>
                 <ol id="form" class='example'>
                 </ol>
@@ -46,6 +47,13 @@
                 <textarea id="boxAnswers" cols="40"></textarea><br>
                 <button
                     onclick='otherAnswer(index, "checkbox", document.getElementById("boxQuestion").value, document.getElementById("boxAnswers").value); index++'>Add</button>
+            </div>
+
+            <button type="button" class="collapsible">Section</button>
+            <div class="content">
+                <label>Title: </label>
+                <textarea id="sectionTitle" cols="40"></textarea><br>
+                <button onclick='section(document.getElementById("sectionTitle").value)'>Add</button>
             </div>
 
         </div>
