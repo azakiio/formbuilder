@@ -1,4 +1,4 @@
-body {
+/* body {
   background: #fff;
   padding: 0px;
   margin: 0px;
@@ -64,4 +64,88 @@ button {
 .delbtn {
   float: right;
   cursor: pointer;
+} */
+body{
+	background-color: #FAFAFA;
+	display: flex;
+	justify-content: center;
+	font-family: "Roboto";
+}
+
+p{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 19px;
+}
+
+h1{
+	font-weight: normal;
+}
+
+button{
+	width: 100px;
+	height: 40px;
+	border: none;
+}
+
+
+.main-container{
+  width: 60vw;
+  max-width: 700px;
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.main-container-header{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%
+}
+
+.form-list{
+	width: 100%;
+}
+
+
+.form-list-head{
+	margin-top: 60px;
+	width: 100%;
+	display: flex;
+	flex-direction: horizontal;
+	justify-content: space-between;
+	padding: 8px 0px 8px 0px;
+}
+
+
+.form-list-head button{
+	background-color: #5894F1;
+	color: white;
+}
+
+.form-list-item{
+	background-color: white;
+	display: flex;
+	flex-direction: horizontal;
+	justify-content: space-between;
+	align-items: center;
+	padding: 8px 16px 8px 16px;
+	margin-top: 8px;
+}
+
+.form-list-item button{
+	background-color: white;
+	border: none;
+	display: inline-block;
+	font-size: 16px;
+}
+
+.log-out{
+	background: #F0F0F0;
+	border: 1px solid #DADADA;
 }

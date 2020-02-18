@@ -1,5 +1,3 @@
-var index = 0;
-
 var tx = document.getElementsByTagName('textarea');
 for (var i = 0; i < tx.length; i++) {
     tx[i].addEventListener("input", OnInput, false);
@@ -30,7 +28,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var formID = window.location.search.slice(3)
 const targetNode = document.getElementById('form');
-//var currtime = window.performance.now()
+
 
 firebase.database().ref('/form-list/' + formID).once('value').then(function (snapshot) {
     targetNode.innerHTML = snapshot.val().content
@@ -46,7 +44,7 @@ function save() {
             content: targetNode.innerHTML
         });
     var currDate = new Date().toLocaleString();
-    document.getElementById("lastSaved").innerText = `Last Saved on: ${currDate}`
+    document.getElementById("lastSaved").innerText = `Last Saved at: ${currDate}`
 }
 
 var coll = document.getElementsByClassName("collapsible");
@@ -62,7 +60,7 @@ for (var i = 0; i < coll.length; i++) {
     });
 }
 
-function textAnswer(index, question) {
+function textAnswer(question) {
     var form = document.getElementById("form")
     var item = document.createElement("li")
     var sublist = document.createElement("ol")
@@ -76,14 +74,14 @@ function textAnswer(index, question) {
 
     var input = document.createElement("input");
     input.type = "text";
-    input.name = index
+    input.disabled = true;
     item.appendChild(input)
     item.appendChild(sublist)
     form.appendChild(item)
     setbtns()
 }
 
-function otherAnswer(index, type, question, answers) {
+function otherAnswer(type, question, answers) {
     var form = document.getElementById("form");
     var item = document.createElement("li")
     var sublist = document.createElement("ol")
@@ -98,7 +96,7 @@ function otherAnswer(index, type, question, answers) {
     for (a of temp) {
         var input = document.createElement("input");
         input.type = type;
-        input.name = index;
+        input.disabled = true;
         var label = document.createElement("label");
         label.appendChild(input)
         label.appendChild(document.createTextNode(a))
