@@ -59,14 +59,14 @@ function errData(err) {
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
-        document.getElementById("logged-in").style.display = "block";
+        document.getElementById("logged-in").style.display = "flex";
         document.getElementById("logged-out").style.display = "none";
         ref.on('value', gotData, errData);
 
     } else {
         // No user is signed in.
         document.getElementById("logged-in").style.display = "none";
-        document.getElementById("logged-out").style.display = "block";
+        document.getElementById("logged-out").style.display = "flex";
 
     }
 });
