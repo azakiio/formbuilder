@@ -1,98 +1,31 @@
-/* body {
-  background: #fff;
-  padding: 0px;
-  margin: 0px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 16px;
-}
-
-input,
-button {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-}
-
-.main-div,
-.loggedin-div {
-  width: 20%;
-  margin: 0px auto;
-  margin-top: 150px;
-  padding: 20px;
-  display: none;
-}
-
-.main-div input {
-  display: block;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background: #fff;
-  padding: 15px;
-  outline: none;
-  width: 100%;
-  margin-bottom: 20px;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  -moz-transition: 0.3s;
-}
-
-.main-div input:focus {
-  border: 1px solid #777;
-}
-
-.main-div button,
-.loggedin-div button {
-  background: #5d8ffc;
-  color: #fff;
-  border: 1px solid #5d8ffc;
-  border-radius: 5px;
-  padding: 15px;
-  display: block;
-  width: 100%;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  -moz-transition: 0.3s;
-}
-
-.main-div button:hover,
-.loggedin-div button:hover {
-  background: #fff;
-  color: #5d8ffc;
-  border: 1px solid #5d8ffc;
-  cursor: pointer;
-}
-
-.delbtn {
-  float: right;
-  cursor: pointer;
-} */
-body{
+body {
 	background-color: #FAFAFA;
 	display: flex;
 	justify-content: center;
 	font-family: "Roboto";
 }
 
-p{
+p {
 	font-style: normal;
 	font-weight: normal;
 	font-size: 16px;
 	line-height: 19px;
 }
 
-h1{
+h1 {
 	font-weight: normal;
 }
 
-button{
+button {
 	width: 100px;
 	height: 40px;
 	border: none;
 }
 
 
-.main-container{
-  width: 60vw;
-  max-width: 700px;
+.main-container {
+	width: 60vw;
+	max-width: 1;
 	padding: 24px;
 	display: flex;
 	flex-direction: column;
@@ -100,7 +33,7 @@ button{
 	align-items: center;
 }
 
-.main-container-header{
+.main-container-header {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -108,12 +41,12 @@ button{
 	width: 100%
 }
 
-.form-list{
+.form-list {
 	width: 100%;
 }
 
 
-.form-list-head{
+.form-list-head {
 	margin-top: 60px;
 	width: 100%;
 	display: flex;
@@ -123,12 +56,13 @@ button{
 }
 
 
-.form-list-head button{
+.form-list-head button {
 	background-color: #5894F1;
 	color: white;
+	cursor: pointer;
 }
 
-.form-list-item{
+.form-list-item {
 	background-color: white;
 	display: flex;
 	flex-direction: horizontal;
@@ -138,14 +72,15 @@ button{
 	margin-top: 8px;
 }
 
-.form-list-item button{
-	background-color: white;
-	border: none;
-	display: inline-block;
-	font-size: 16px;
+
+.form-list-item .del {
+	cursor: pointer;
+	margin-right: 20px;
 }
 
-.log-out{
+
+.log-out {
 	background: #F0F0F0;
 	border: 1px solid #DADADA;
+	cursor: pointer;
 }
