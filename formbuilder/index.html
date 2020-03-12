@@ -24,7 +24,7 @@
                 <button>Download XML</button>
             </div>
         </div>
-        <h1 style="text-align: center;">Form Title</h1>
+        <h1 id="form_title" contenteditable style="text-align: center;">Form Title</h1>
 
 
 
@@ -35,28 +35,28 @@
 
 
         <form>
-            <ol id="form" class='example'>
+            <ol id="form" class="example">
             </ol>
         </form>
 
 
 
-        <button type="button" class="collapsible">Section</button>
+        <!-- <button type="button" class="collapsible">Section</button>
         <div class="content">
             <label>Title: </label>
             <textarea id="sectionTitle" cols="40"></textarea><br>
             <button onclick='section(document.getElementById("sectionTitle").value)'>Add</button>
-        </div>
+        </div> -->
 
-        <button type="button" class="collapsible">Text Answer</button>
         <div class="content">
+            <h3>Text Answer</h3>
             <label>Question: </label>
             <textarea id="textQuestion" cols="40"></textarea><br>
             <button onclick='textAnswer(document.getElementById("textQuestion").value)'>Add</button>
         </div>
 
-        <button type="button" class="collapsible">Radio Answer</button>
         <div class="content">
+            <h3>Radio Answer</h3>
             <label>Question: </label>
             <textarea id="radioQuestion" cols="40"></textarea><br>
             <label>Answers: </label>
@@ -65,8 +65,8 @@
                 onclick='otherAnswer("radio", document.getElementById("radioQuestion").value, document.getElementById("radioAnswers").value)'>Add</button>
         </div>
 
-        <button type="button" class="collapsible">Checkbox Answer</button>
         <div class="content">
+            <h3>Checkbox Answer</h3>
             <label>Question: </label>
             <textarea id="boxQuestion" cols="40"></textarea><br>
             <label>Answers: </label>

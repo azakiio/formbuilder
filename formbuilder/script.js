@@ -1,6 +1,9 @@
 var tx = document.getElementsByTagName('textarea');
 for (var i = 0; i < tx.length; i++) {
-    tx[i].addEventListener("input", OnInput, false);
+    tx[i].addEventListener("input", () => {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    }, false);
 }
 
 $(function () {
@@ -9,10 +12,6 @@ $(function () {
     });
 });
 
-function OnInput() {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 'px';
-}
 
 var firebaseConfig = {
     apiKey: "AIzaSyAltMfeb-pzQUfQz-pfTnh2jfwBFVzhPq0",
@@ -47,18 +46,18 @@ function save() {
     document.getElementById("lastSaved").innerText = `Last Saved at: ${currDate}`
 }
 
-var coll = document.getElementsByClassName("collapsible");
-for (var i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
-        }
-    });
-}
+// var coll = document.getElementsByClassName("collapsible");
+// for (var i = 0; i < coll.length; i++) {
+//     coll[i].addEventListener("click", function () {
+//         this.classList.toggle("active");
+//         var content = this.nextElementSibling;
+//         if (content.style.display === "block") {
+//             content.style.display = "none";
+//         } else {
+//             content.style.display = "block";
+//         }
+//     });
+// }
 
 function textAnswer(question) {
     var form = document.getElementById("form")
@@ -70,7 +69,6 @@ function textAnswer(question) {
     delbtn.src = "/assets/icons8-delete.svg"
     delbtn.setAttribute("class", "delbtn")
     item.appendChild(delbtn)
-    
 
     var input = document.createElement("input");
     input.type = "text";
@@ -109,15 +107,15 @@ function otherAnswer(type, question, answers) {
     setbtns()
 }
 
-function section(title){
-    var form = document.getElementById("form")
-    var item = document.createElement("li")
-    var sublist = document.createElement("ol")
-    item.appendChild(document.createTextNode(title)) 
-    item.appendChild(sublist)
-    form.appendChild(item)
-    setbtns()
-}
+// function section(title){
+//     var form = document.getElementById("form")
+//     var item = document.createElement("li")
+//     var sublist = document.createElement("ol")
+//     item.appendChild(document.createTextNode(title)) 
+//     item.appendChild(sublist)
+//     form.appendChild(item)
+//     setbtns()
+// }
 
 function setbtns() {
     delbtns = document.getElementsByClassName("delbtn")
@@ -128,4 +126,10 @@ function setbtns() {
             return false;
         }
     }
+}
+
+var form_title = document.getElementById("form_title")
+form_title.onblur = () => {
+    //Save title to firebase
+    console.log("test")
 }

@@ -22,11 +22,10 @@ firebase.initializeApp(firebaseConfig);
 const urlParams = new URLSearchParams(window.location.search);
 var formID = urlParams.get("k")
 var userID = urlParams.get("u")
-
 const targetNode = document.getElementById('form');
 
 
-firebase.database().ref(`form-list/${formID}`).once('value').then(function (snapshot) {
+firebase.database().ref('/form-list/' + formID).once('value').then(function (snapshot) {
     targetNode.innerHTML = snapshot.val().content
     setbtns()
 }, function (err) {

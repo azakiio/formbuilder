@@ -33,7 +33,7 @@ function gotData(data) {
         link_a.innerText = forms[k].name;
 
         let date_p = document.createElement("p")
-        date_p.innerText = forms[k].creationDate
+        date_p.innerText = forms[k].creationDate;
 
         let delete_button = document.createElement("span")
         delete_button.onclick = () => {
