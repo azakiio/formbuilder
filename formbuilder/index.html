@@ -18,7 +18,7 @@
         <div class="left-buttons">
             <button onclick=""><i class="fa fa-chevron-left"></i>Home</button>
             <button onclick="save()">Save</button>
-            <span id="lastSaved"></span>
+            <span style="position: absolute; left: 100%; white-space: pre;" id="lastSaved"></span>
         </div>
 
         <h1 id="form_title" contenteditable>Thyroid Cancer Checklist</h1>
@@ -119,12 +119,6 @@
                 $("div.child-menu").toggleClass("expand");
                 e.preventDefault();
             });
-        });
-        $('textarea').each(function () {
-            this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-        }).on('input', function () {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
         });
     </script>
 </body>

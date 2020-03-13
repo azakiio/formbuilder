@@ -57,6 +57,7 @@ p {
   color: #3a3a3a;
   background-color: transparent;
   font-weight: 600;
+  outline: none;
 }
 
 .header button:hover {
@@ -68,6 +69,7 @@ p {
   flex-direction: row;
   align-items: center;
   padding-left: 3vw;
+  position: relative;
 }
 
 .right-buttons {
@@ -196,8 +198,8 @@ i {
   position: relative;
   margin-left: 16px;
   padding: 8px;
-  width: 150px;
-  height: auto;
+  /* width: 150px;
+  height: auto; */
   background: #ffffff;
   border: 0.5px solid #efefef;
   box-sizing: border-box;

@@ -1,3 +1,10 @@
+$('textarea').each(function () {
+    this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+}).on('input', function () {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + 'px';
+});
+
 var firebaseConfig = {
     apiKey: "AIzaSyAltMfeb-pzQUfQz-pfTnh2jfwBFVzhPq0",
     authDomain: "ohforms.firebaseapp.com",
@@ -123,8 +130,13 @@ function addQuestion(place, parent) {
 
 
     document.getElementById("form").appendChild(question)
-    window.scrollTo(0,document.body.scrollHeight);6
-
+    window.scrollTo(0,document.body.scrollHeight);
+    $('textarea').each(function () {
+        this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+    }).on('input', function () {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
 }
 
 
