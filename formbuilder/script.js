@@ -33,7 +33,7 @@ function save() {
 }
 
 
-function addQuestion(place) {
+function addQuestion(place, parent) {
     var question = document.createElement("div")
     question.classList.add("question")
     question.setAttribute("name", place)
@@ -43,7 +43,7 @@ function addQuestion(place) {
     var pencil = document.createElement("i")
     pencil.classList.add("fa")
     pencil.classList.add("fa-pencil")
-    pencil.onclick = function() {
+    pencil.onclick = function () {
         toggleEdit(this)
     }
     var p = document.createElement("p")
@@ -52,31 +52,42 @@ function addQuestion(place) {
     var answers = document.createElement("div")
     answers.setAttribute("name", "answers")
 
-    var input = document.createElement("input")
-    input.classList.add("text-answer") //TODO
-    input.type = place
-    input.disabled = true
-    input.placeholder = "Written Answer..."
-    
+    if (place == "text") {
+        var input = document.createElement("input")
+        input.classList.add("text-answer")
+        input.type = place
+        input.disabled = true
+        input.placeholder = "Written Answer..."
+        answers.append(input)
+    }
+
     question.append(question_view)
     question_view.append(pencil, p, answers)
-    answers.append(input)
+
 
     var edit_view = document.createElement("div")
     edit_view.classList.add("edit-view")
 
     var p = document.createElement("p")
-    p.innerHTML = '<i class="fa fa-font"></i>TEXT QUESTION'
+    if (place == "text"){
+        p.innerHTML = '<i class="fa fa-font"></i>TEXT QUESTION'
+    } else if (place =="radio"){
+        p.innerHTML = '<i class="far fa-dot-circle"></i>SINGLE SELECT QUESTION'
+    } else {
+        p.innerHTML = '<i class="fa fa-check-square"></i>MULTI SELECT QUESTION'
+    }
+    
     var input = document.createElement("input")
     input.type = "text"
     input.placeholder = "Enter your question here"
+
 
     var edit_buttons = document.createElement("div")
     edit_buttons.classList.add("edit-buttons")
 
     var delbtn = document.createElement("button")
     delbtn.classList.add("solid-btn", "red")
-    delbtn.onclick = function() {
+    delbtn.onclick = function () {
         deleteQuestion(this)
     }
     delbtn.innerText = "Delete"
@@ -84,31 +95,41 @@ function addQuestion(place) {
     var div = document.createElement("div")
     var cancelbtn = document.createElement("button")
     cancelbtn.classList.add("outlined-btn")
-    cancelbtn.onclick = function() {
+    cancelbtn.onclick = function () {
         cancelEdit(this)
     }
     cancelbtn.innerText = "Cancel"
-    
+
     var savebtn = document.createElement("button")
     savebtn.classList.add("solid-btn")
-    savebtn.onclick = function() {
+    savebtn.onclick = function () {
         saveEdit(this)
     }
     savebtn.innerText = "Save"
 
     question.append(edit_view)
-    edit_view.append(p,input,edit_buttons)
-    edit_buttons.append(delbtn,div)
-    div.append(cancelbtn,savebtn)
-    
-    
+
+    edit_view.append(p, input)
+
+    if (place != "text") {
+        var textarea = document.createElement("textarea")
+        textarea.placeholder = "Enter Line-Separated Answers"
+        edit_view.append(textarea)
+    }
+
+    edit_view.append(edit_buttons)
+    edit_buttons.append(delbtn, div)
+    div.append(cancelbtn, savebtn)
+
+
     document.getElementById("form").appendChild(question)
+    window.scrollTo(0,document.body.scrollHeight);6
 
 }
 
 
 var form_title = document.getElementById("form_title")
-form_title.onblur = function() {
+form_title.onblur = function () {
     //Save title to firebase
     console.log("test")
 }
@@ -129,7 +150,7 @@ function saveEdit(e) {
     var type = e.parentNode.parentNode.parentNode.parentNode.getAttribute("name")
     var question_view = e.parentNode.parentNode.parentNode.parentNode.children[0]
     var edit_view = e.parentNode.parentNode.parentNode.parentNode.children[1]
-    
+
     question_view.children[1].innerText = edit_view.children[1].value
 
     if (type != "text") {

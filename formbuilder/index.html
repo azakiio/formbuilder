@@ -51,7 +51,7 @@
                 <div class="edit-view hidden">
                     <p><i class="far fa-dot-circle"></i>SINGLE SELECT QUESTION</p>
                     <input type="text" placeholder="Enter your question here">
-                    <textarea type="text" placeholder="Enter your answers here"></textarea>
+                    <textarea placeholder="Enter your answers here"></textarea>
                     <div class="edit-buttons">
                         <button class="solid-btn red" onclick="deleteQuestion(this)">Delete</button>
                         <div>
@@ -100,9 +100,9 @@
         <div class="form-buttons">
             <p class="instruction">Add a question</p>
             <div>
-                <button class="solid-btn"><i class="fa fa-font"></i>Text</button>
-                <button class="solid-btn"><i class="far fa-dot-circle"></i>Single Select</button>
-                <button class="solid-btn"><i class="fa fa-check-square"></i>Multi Select</button>
+                <button class="solid-btn" onclick="addQuestion('text')"><i class="fa fa-font"></i>Text</button>
+                <button class="solid-btn" onclick="addQuestion('radio')"><i class="far fa-dot-circle"></i>Single Select</button>
+                <button class="solid-btn" onclick="addQuestion('checkbox')"><i class="fa fa-check-square"></i>Multi Select</button>
             </div>
         </div>
     </div>
