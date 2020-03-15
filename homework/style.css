@@ -1,0 +1,159 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Open Sans";
+    font-size: 14px;
+    line-height: 21px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: normal;
+    margin-right: auto;
+    margin-bottom: 0px;
+}
+
+#instructions{
+    margin-right: auto;
+    margin-bottom: 32px;
+}
+
+.main-container {
+    width: 80vw;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 32px;
+}
+
+.question-container {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.left-container, .right-container{
+    width: 50%;
+    
+}
+
+/* Left Container */
+/* ********************************* */
+
+.left-container{
+    display: block;
+    padding: 8px 16px 8px 16px;
+    background-color: #d8d8d8;
+}
+
+.left-container p{
+    width: 75%;
+}
+
+.left-container label{
+    display: block;
+    margin-bottom: 8px;
+}
+
+.opt-out{
+    width: 100px;
+    padding: 4px 0px 4px 0px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 3px;
+    float: right;
+    margin: 16px 0 0 0;
+    text-align: center;
+}
+
+.opt-out input{
+    margin-right: 8px;
+}
+
+.answer{
+    font-size: 12px;
+    color: gray;
+}
+
+
+/* Right Container */
+/* ********************************* */
+
+.right-container{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 8px;
+}
+
+.right-container p{
+    font-weight: 600;
+}
+
+.scores, .overall-score{
+    width: 50%;
+}
+
+.scores{
+    text-align: center;
+}
+
+.scores{
+    border-right: 1px solid #DFDFDF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 16px;
+}
+
+.clarity-score{
+    /* border: 1px solid lightcoral; */
+    margin-bottom: 24px;
+}
+
+.relevance-score{
+    /* border: 1px solid lightblue; */
+}
+
+.scale{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-end;
+}
+
+.scale label{
+    font-size: 12px;
+}
+
+.scale .score-label input{
+    display: block;
+}
+
+.overall-score{
+    /* border: 1px solid lightgreen; */
+    padding: 16px;
+    text-align: left;
+}
+
+.overall-score p{
+    text-align: center;
+}
+
+.overall-score label{
+    display: block;
+    margin-bottom: 8px;
+}
+
+.overall-score input{
+    margin-right: 8px;
+}
