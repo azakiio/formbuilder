@@ -16,21 +16,10 @@ body {
 p {
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19px;
 }
 
-.oh-blue {
-  color: #3cb3e0;
-}
-
-.oh-blue-bg {
-  background-color: #3cb3e0;
-}
-
-.spacer {
-  height: 50px;
-}
 
 /*Header*/
 /**************************************/
@@ -85,12 +74,16 @@ p {
   padding-right: 3vw;
 }
 
-#save-time {
-  font-size: 14px;
+#lastSaved {
+  font-size: 12px;
   font-weight: normal;
   color: grey;
   font-family: "Open Sans";
+  position: absolute; 
+  left: 100%; 
+  white-space: pre;
 }
+
 
 /*Buttons*/
 /**************************************/
@@ -134,6 +127,11 @@ button:disabled {
   color: #b1b1b1;
 }
 
+.outlined-btn:hover {
+  background: #b1b1b1;
+  color: white;
+}
+
 .red {
   background-color: #ff6864;
 }
@@ -142,16 +140,11 @@ button:disabled {
   background-color: #db5a57;
 }
 
-.outlined-btn:hover {
-  background: #b1b1b1;
-  color: white;
-}
-
 i {
   margin-right: 8px;
 }
 
-/* Add Child */
+/* Add Child Button */
 /**************************************/
 
 .add-child {
@@ -301,7 +294,7 @@ i {
   position: relative;
   margin: 24px 0;
   margin-bottom: 12px;
-  padding: 16px;
+  padding: 16px 16px 32px 16px;
   background-color: #f0f0f0;
   border-radius: 4px;
 }
@@ -328,11 +321,9 @@ i {
   cursor: pointer;
 }
 
-
 .hidden{
   display: none;
 }
-
 
 /*Text Answer*/
 /**************************************/
@@ -431,16 +422,30 @@ textarea::placeholder {
   justify-content: space-between;
 }
 
-.child {
-  border: 1px solid black;
+.edit-buttons .outline-btn{
+  margin-right: 8px;
 }
 
-.child span {
-  font-weight: 800;
-}
 
-.condition {
-  margin-top: -8px;
-  margin-bottom: 24px;
+/* Child Questions */
+/**************************************/
+
+.child-condition{
   font-size: 12px;
+  margin-bottom: 24px;
 }
+
+.child-condition span{
+  font-weight: 600;
+}
+
+.child-condition-select{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.child-condition-select p{
+  color: black;
+}
+
