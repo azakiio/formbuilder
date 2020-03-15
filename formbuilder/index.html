@@ -76,6 +76,8 @@
             </div>
 
 
+
+
             <div class="question" name="text">
 
                 <div class="question-view">
@@ -103,6 +105,97 @@
 
 
             </div>
+
+            <div class="question" name="radio">
+
+                <div class="question-view">
+                    <i class="fa fa-pencil" onclick="toggleEdit(this)"></i>
+                    <p name="question">1. This is a parent question</p>
+                    <div name="answers">
+                        <label><input type="radio" disabled>a</label>
+                        <label><input type="radio" disabled>b</label>
+                        <label><input type="radio" disabled>c</label>
+                        <label><input type="radio" disabled>d</label>
+                    </div>
+                </div>
+
+                <div class="add-child">
+                    <button class="child-btn">+</button>
+                    <div class="child-menu">
+                        <p>Add a child question</p>
+                        <a><i class="fa fa-font"></i>Text</a><br>
+                        <a><i class="far fa-dot-circle"></i>Single Select</a><br>
+                        <a><i class="fa fa-check-square"></i>Multi Select</a><br>
+                    </div>
+                </div>
+
+                <div class="edit-view hidden">
+                    <p><i class="far fa-dot-circle"></i>SINGLE SELECT QUESTION</p>
+                    <input type="text" placeholder="Enter your question here">
+                    <textarea placeholder="Enter your answers here"></textarea>
+                    <div class="edit-buttons">
+                        <button class="solid-btn red" onclick="deleteQuestion(this)">Delete</button>
+                        <div>
+                            <button class="outlined-btn" onclick="cancelEdit(this)">Cancel</button>
+                            <button class="solid-btn" onclick="saveEdit(this)">Save</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CHILD QUESTION -->
+
+            <div class="question" name="radio">
+
+                <div class="question-view">
+                    <i class="fa fa-pencil" onclick="toggleEdit(this)"></i>
+                    <p class="child-condition"><span>Condition: </span>a</p> <!-- ADDED THIS LINE FOR THE CONDITION IN QUESTION VIEW-->
+                    <p name="question">1.1 This is a child question</p>
+                    <div name="answers">
+                        <label><input type="radio" disabled>E</label>
+                        <label><input type="radio" disabled>F</label>
+                        <label><input type="radio" disabled>G</label>
+                    </div>
+                </div>
+
+                <div class="add-child">
+                    <button class="child-btn">+</button>
+                    <div class="child-menu">
+                        <p>Add a child question</p>
+                        <a><i class="fa fa-font"></i>Text</a><br>
+                        <a><i class="far fa-dot-circle"></i>Single Select</a><br>
+                        <a><i class="fa fa-check-square"></i>Multi Select</a><br>
+                    </div>
+                </div>
+
+                <div class="edit-view">
+                    <p><i class="far fa-dot-circle"></i>SINGLE SELECT QUESTION</p>
+                    <div class="child-condition-select">                         <!-- ADDED THIS DIV FOR THE CONDITION IN EDIT VIEW-->
+                        <p>Show if answered:</p>
+                        <select name="" id="">
+                            <option value="">Select a parent answer</option>
+                            <option value="">a</option>
+                            <option value="">b</option>
+                            <option value="">c</option>
+                            <option value="">d</option>
+                        </select>
+                    </div>                                                      <!-- END OF DIV-->
+                    <input type="text" placeholder="Enter your question here">
+                    <textarea placeholder="Enter your answers here"></textarea>
+                    <div class="edit-buttons">
+                        <button class="solid-btn red" onclick="deleteQuestion(this)">Delete</button>
+                        <div>
+                            <button class="outlined-btn" onclick="cancelEdit(this)">Cancel</button>
+                            <button class="solid-btn" onclick="saveEdit(this)">Save</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
 
         </div>
 
