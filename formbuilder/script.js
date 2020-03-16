@@ -5,6 +5,12 @@ $('textarea').each(function () {
     this.style.height = (this.scrollHeight) + 'px';
 });
 
+$("button.child-btn").click(function (e) {
+    $(this).toggleClass("active");
+    $("div.child-menu").toggleClass("expand");
+    e.preventDefault();
+});
+
 var firebaseConfig = {
     apiKey: "AIzaSyAltMfeb-pzQUfQz-pfTnh2jfwBFVzhPq0",
     authDomain: "ohforms.firebaseapp.com",
@@ -48,11 +54,15 @@ function addQuestion(place, parent) {
     var question_view = document.createElement("div")
     question_view.classList.add("question-view", "hidden")
     var pencil = document.createElement("i")
-    pencil.classList.add("fa")
-    pencil.classList.add("fa-pencil")
+    pencil.classList.add("fa", "fa-pencil")
     pencil.onclick = function () {
         toggleEdit(this)
     }
+
+    var child_condition = document.createElement("p")
+    child_condition.classList.add("child-condition", "hidden")
+    child_condition.innerText = "placeholder condition"
+
     var p = document.createElement("p")
     p.setAttribute("name", "question")
 
@@ -69,25 +79,60 @@ function addQuestion(place, parent) {
     }
 
     question.append(question_view)
-    question_view.append(pencil, p, answers)
+    question_view.append(pencil, child_condition, p, answers)
+
+    var add_child = document.createElement("div")
+    add_child.classList.add("add-child")
+
+    var child_btn = document.createElement("button")
+    child_btn.classList.add("child-btn")
+    child_btn.innerText = "+"
+
+    var child_menu = document.createElement("div")
+    child_menu.classList.add("child-menu")
+
+    var p = document.createElement("p")
+    p.innerText = 'Add a child question'
+    var text_child = document.createElement("a")
+    text_child.innerHTML = '<i class="fa fa-font"></i>Text'
+    text_child.onclick = function () {
+        console.log(this.parentNode.parentNode.parentNode)
+        addQuestion("text", "test")
+    }
+
+    var single_child = document.createElement("a")
+    single_child.innerHTML = '<i class="far fa-dot-circle"></i>Single Select'
+    single_child.onclick = function () {
+        console.log(this.parentNode.parentNode.parentNode)
+        addQuestion("radio", "test")
+    }
+    var multi_child = document.createElement("a")
+    multi_child.innerHTML = '<i class="fa fa-check-square"></i>Multi Select'
+    multi_child.onclick = function () {
+        console.log(this.parentNode.parentNode.parentNode)
+        addQuestion("checkbox", "test")
+    }
+
+    child_menu.append(p, text_child, single_child, multi_child)
+    add_child.append(child_btn, child_menu)
+    question.append(add_child)
 
 
     var edit_view = document.createElement("div")
     edit_view.classList.add("edit-view")
 
     var p = document.createElement("p")
-    if (place == "text"){
+    if (place == "text") {
         p.innerHTML = '<i class="fa fa-font"></i>TEXT QUESTION'
-    } else if (place =="radio"){
+    } else if (place == "radio") {
         p.innerHTML = '<i class="far fa-dot-circle"></i>SINGLE SELECT QUESTION'
     } else {
         p.innerHTML = '<i class="fa fa-check-square"></i>MULTI SELECT QUESTION'
     }
-    
+
     var input = document.createElement("input")
     input.type = "text"
     input.placeholder = "Enter your question here"
-
 
     var edit_buttons = document.createElement("div")
     edit_buttons.classList.add("edit-buttons")
@@ -116,7 +161,20 @@ function addQuestion(place, parent) {
 
     question.append(edit_view)
 
-    edit_view.append(p, input)
+    edit_view.append(p)
+
+    var child_condition_select = document.createElement("div")
+    if (parent) {
+        child_condition_select.classList.add("child_condition_select")
+
+        var condition_p = document.createElement("p")
+        condition_p.innerText = "Show if Answered: "
+
+        var condition_answers = document.createElement("select")
+
+        child_condition_select.append(condition_p, condition_answers)
+    }
+    edit_view.append(child_condition_select, input)
 
     if (place != "text") {
         var textarea = document.createElement("textarea")
@@ -130,7 +188,7 @@ function addQuestion(place, parent) {
 
 
     document.getElementById("form").appendChild(question)
-    window.scrollTo(0,document.body.scrollHeight);
+    window.scrollTo(0, document.body.scrollHeight);
     $('textarea').each(function () {
         this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
     }).on('input', function () {
@@ -149,25 +207,26 @@ form_title.onblur = function () {
 function toggleEdit(e) {
     var question = e.parentNode.parentNode.children
     question[0].classList.toggle("hidden")
-    question[1].classList.toggle("hidden")
+    question[2].classList.toggle("hidden")
 }
 
 function cancelEdit(e) {
     var question = e.parentNode.parentNode.parentNode.parentNode.children
     question[0].classList.toggle("hidden")
-    question[1].classList.toggle("hidden")
+    question[2].classList.toggle("hidden")
 }
 
 function saveEdit(e) {
     var type = e.parentNode.parentNode.parentNode.parentNode.getAttribute("name")
     var question_view = e.parentNode.parentNode.parentNode.parentNode.children[0]
-    var edit_view = e.parentNode.parentNode.parentNode.parentNode.children[1]
+    var add_child = e.parentNode.parentNode.parentNode.parentNode.children[1]
+    var edit_view = e.parentNode.parentNode.parentNode.parentNode.children[2]
 
-    question_view.children[1].innerText = edit_view.children[1].value
+    question_view.children[2].innerText = edit_view.children[2].value
 
     if (type != "text") {
-        question_view.children[2].innerHTML = ""
-        var temp = edit_view.children[2].value.split(/\r?\n/);
+        question_view.children[3].innerHTML = ""
+        var temp = edit_view.children[3].value.split(/\r?\n/);
         for (a of temp) {
             var input = document.createElement("input");
             input.type = type;
@@ -175,12 +234,12 @@ function saveEdit(e) {
             var label = document.createElement("label");
             label.appendChild(input)
             label.appendChild(document.createTextNode(a))
-            question_view.children[2].appendChild(label)
+            question_view.children[3].appendChild(label)
         }
     }
     var question = e.parentNode.parentNode.parentNode.parentNode.children
     question[0].classList.toggle("hidden")
-    question[1].classList.toggle("hidden")
+    question[2].classList.toggle("hidden")
 }
 
 function deleteQuestion(e) {
