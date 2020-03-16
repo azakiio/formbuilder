@@ -52,3 +52,7 @@ function setbtns() {
         }
     }
 }
+
+function setInactive(checkbox){
+
+}
