@@ -11,6 +11,27 @@
 </head>
 
 <body>
+    <div class="progress">
+        <div class="text">
+            <p id="progress-txt">Your Progress</p>
+            <p>COMPLETED</p>
+            <p>OUT OF</p>
+        </div>
+
+        <div class="numbers">
+            <p>0</p>
+            <p>4</p>
+        </div>
+    </div>
+
+    <div class="comment-box">
+        <p>ADD COMMENT</p>
+        <input type="text" placeholder="Enter your comment here">
+        <div class="comment-buttons">
+            <button class="secondary-btn">Cancel</button>
+            <button class="main-btn">Save</button>
+        </div>  
+    </div>
 
     <div class="main-container">
 
@@ -65,13 +86,128 @@
                         <label for="overall"><input name="overall" type="radio">Optional</label>
                         <label for="overall"><input name="overall" type="radio">Do not include</label>
                     </div>
+                    <div class="comment">
+                        <a href=""><i class="far fa-comment-dots"></i></a> 
+                        <div class="comment-box">
+                            <p>ADD COMMENT</p>
+                            <input type="text" placeholder="Enter your comment here">
+                            <!-- <div class="comment-buttons">
+                                <button class="secondary-btn">Cancel</button>
+                                <button class="main-btn">Save</button>
+                            </div>   -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
 
         <!-- Example Skipped Question -->
-        <div class="question-container child">
+        <div class="question-container">
+            <div class="left-container">
+                <label class="opt-out" for="opt-out-2">
+                    <input type="checkbox" id="opt-out-2" name="opt-out" checked> <span class="label-text"> Opt Out</span>
+                </label>
+                <p>2. This is another example question that can be much much much much longer? Is it much much much longer than 3 lines?</p>
+                <label class="answer"><input type="radio" disabled> Answer 1</label>
+                <label class="answer"><input type="radio" disabled> Answer 2</label>
+                <label class="answer"><input type="radio" disabled> Answer 3</label>
+            </div>
+
+            <div class="right-container inactive">
+                <div class="clarity-relevance">
+                    <div class="clarity-score">
+                        <p>Clarity</p>
+                        <div class="scale">
+                            <label for="">Unclear</label>
+                            <label for="clarity" class="score-label">1<input name="clarity" type="radio"></label>
+                            <label for="clarity" class="score-label">2<input name="clarity" type="radio"></label>
+                            <label for="clarity" class="score-label">3<input name="clarity" type="radio"></label>
+                            <label for="clarity" class="score-label">4<input name="clarity" type="radio"></label>
+                            <label for="clarity" class="score-label">5<input name="clarity" type="radio"></label>
+                            <label for="">Clear</label>
+                        </div>
+                    </div>
+
+                    <div class="relevance-score">
+                        <p>Relevance</p>
+                        <div class="scale">
+                            <label for="">Irrelevant</label>
+                            <label for="relevance" class="score-label">1<input name="relevance" type="radio"></label>
+                            <label for="relevance" class="score-label">2<input name="relevance" type="radio"></label>
+                            <label for="relevance" class="score-label">3<input name="relevance" type="radio"></label>
+                            <label for="relevance" class="score-label">4<input name="relevance" type="radio"></label>
+                            <label for="relevance" class="score-label">5<input name="relevance" type="radio"></label>
+                            <label for="">Relevant</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overall-score">
+                    <p>Overall</p>
+                    <div>
+                        <label for="overall"><input name="overall" type="radio">Include</label>
+                        <label for="overall"><input name="overall" type="radio">Optional</label>
+                        <label for="overall"><input name="overall" type="radio">Do not include</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example Skipped Question -->
+        <div class="question-container">
+            <div class="left-container">
+                <label class="opt-out" for="opt-out-2">
+                    <input type="checkbox" id="opt-out-2" name="opt-out" checked> <span class="label-text"> Opt Out</span>
+                </label>
+                <p>2. This is another example question that can be much much much much longer? Is it much much much longer than 3 lines?</p>
+                <label class="answer"><input type="radio" disabled> Answer 1</label>
+                <label class="answer"><input type="radio" disabled> Answer 2</label>
+                <label class="answer"><input type="radio" disabled> Answer 3</label>
+            </div>
+
+            <div class="right-container inactive">
+                <div class="clarity-relevance">
+                    <div class="clarity-score">
+                        <p>Clarity</p>
+                        <div class="scale">
+                            <label for="">Unclear</label>
+                            <label for="clarity" class="score-label">1<input name="clarity" type="radio"></label>
+                            <label for="clarity" class="score-label">2<input name="clarity" type="radio"></label>
+                            <label for="clarity" class="score-label">3<input name="clarity" type="radio"></label>
+                            <label for="clarity" class="score-label">4<input name="clarity" type="radio"></label>
+                            <label for="clarity" class="score-label">5<input name="clarity" type="radio"></label>
+                            <label for="">Clear</label>
+                        </div>
+                    </div>
+
+                    <div class="relevance-score">
+                        <p>Relevance</p>
+                        <div class="scale">
+                            <label for="">Irrelevant</label>
+                            <label for="relevance" class="score-label">1<input name="relevance" type="radio"></label>
+                            <label for="relevance" class="score-label">2<input name="relevance" type="radio"></label>
+                            <label for="relevance" class="score-label">3<input name="relevance" type="radio"></label>
+                            <label for="relevance" class="score-label">4<input name="relevance" type="radio"></label>
+                            <label for="relevance" class="score-label">5<input name="relevance" type="radio"></label>
+                            <label for="">Relevant</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overall-score">
+                    <p>Overall</p>
+                    <div>
+                        <label for="overall"><input name="overall" type="radio">Include</label>
+                        <label for="overall"><input name="overall" type="radio">Optional</label>
+                        <label for="overall"><input name="overall" type="radio">Do not include</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example Skipped Question -->
+        <div class="question-container">
             <div class="left-container">
                 <label class="opt-out" for="opt-out-2">
                     <input type="checkbox" id="opt-out-2" name="opt-out" checked> <span class="label-text"> Opt Out</span>
