@@ -39,7 +39,7 @@
 
         <div id="form" class="form-container">
 
-            <div class="question" name="radio">
+            <!-- <div class="question" name="radio">
 
                 <div class="question-view">
                     <i class="fa fa-pencil" onclick="toggleEdit(this)"></i>
@@ -72,11 +72,11 @@
                     </div>
                 </div>
 
-            </div>
+            </div> -->
 
 
 
-            <div class="question" name="text">
+            <!-- <div class="question" name="text">
 
                 <div class="question-view">
                     <i class="fa fa-pencil" onclick="toggleEdit(this)"></i>
@@ -102,9 +102,9 @@
                 </div>
 
 
-            </div>
+            </div> -->
 
-            <div class="question" name="radio">
+            <!-- <div class="question" name="radio">
 
                 <div class="question-view">
                     <i class="fa fa-pencil" onclick="toggleEdit(this)"></i>
@@ -141,16 +141,15 @@
                     </div>
                 </div>
 
-            </div>
+            </div> -->
 
             <!-- CHILD QUESTION -->
 
-            <div class="question" name="radio">
+            <!-- <div class="question" name="radio" id=5>
 
                 <div class="question-view">
                     <i class="fa fa-pencil" onclick="toggleEdit(this)"></i>
                     <p class="child-condition"><span>Condition: </span>a</p>
-                    <!-- ADDED THIS LINE FOR THE CONDITION IN QUESTION VIEW-->
                     <p name="question">1.1 This is a child question</p>
                     <div name="answers">
                         <label><input type="radio" disabled>E</label>
@@ -172,7 +171,6 @@
                 <div class="edit-view">
                     <p><i class="far fa-dot-circle"></i>SINGLE SELECT QUESTION</p>
                     <div class="child-condition-select">
-                        <!-- ADDED THIS DIV FOR THE CONDITION IN EDIT VIEW-->
                         <p>Show if answered:</p>
                         <select name="" id="">
                             <option value="">Select a parent answer</option>
@@ -181,7 +179,7 @@
                             <option value="">c</option>
                             <option value="">d</option>
                         </select>
-                    </div> <!-- END OF DIV-->
+                    </div>
                     <input type="text" placeholder="Enter your question here">
                     <textarea placeholder="Enter your answers here"></textarea>
                     <div class="edit-buttons">
@@ -194,7 +192,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div> -->
 
 
         </div>
@@ -203,10 +201,10 @@
         <div class="form-buttons">
             <p class="instruction">Add a question</p>
             <div>
-                <button class="solid-btn" onclick="addQuestion('text')"><i class="fa fa-font"></i>Text</button>
-                <button class="solid-btn" onclick="addQuestion('radio')"><i class="far fa-dot-circle"></i>Single
+                <button class="solid-btn" onclick="addQuestion('text', '-1')"><i class="fa fa-font"></i>Text</button>
+                <button class="solid-btn" onclick="addQuestion('radio', '-1')"><i class="far fa-dot-circle"></i>Single
                     Select</button>
-                <button class="solid-btn" onclick="addQuestion('checkbox')"><i class="fa fa-check-square"></i>Multi
+                <button class="solid-btn" onclick="addQuestion('checkbox', '-1')"><i class="fa fa-check-square"></i>Multi
                     Select</button>
             </div>
         </div>

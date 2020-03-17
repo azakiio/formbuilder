@@ -125,6 +125,7 @@ button:disabled {
   background: #ffffff;
   border: 1px solid #b1b1b1;
   color: #b1b1b1;
+  margin-right: 8px;
 }
 
 .outlined-btn:hover {
@@ -218,6 +219,8 @@ i {
 
 .child-menu a {
   font-size: 12px;
+  display: block;
+  margin-bottom: 8px;
 }
 
 .child-menu a:hover {
@@ -444,6 +447,13 @@ textarea::placeholder {
   flex-direction: row;
   align-items: center;
 }
+
+.child-condition-select select{
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+
 
 .child-condition-select p{
   color: black;
