@@ -1,6 +1,6 @@
 $('textarea').each(function () {
     this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-}).on('input', function () {
+}).on('input focus', function () {
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight) + 'px';
 });
@@ -18,23 +18,30 @@ var firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-var formID = window.location.search.slice(3)
+const urlParams = new URLSearchParams(window.location.search);
+var formID = urlParams.get("k")
 const targetNode = document.getElementById('form');
-var globalID = 0
+var globalID = null
+
+document.getElementById("edit_form").href = `/formbuilder/?k=${formID}`
+document.getElementById("view_results").href = `/formbuilder/results.html?k=${formID}`
 
 
-// firebase.database().ref('/form-list/' + formID).once('value').then(function (snapshot) {
-//     targetNode.innerHTML = snapshot.val().content
-//     setbtns()
-// }, function (err) {
-//     targetNode.innerText = err;
-//     targetNode.innerText += "\n\nPlease return Home and Login"
-// });
+firebase.database().ref('/form-list/' + formID).once('value').then(function (snapshot) {
+    targetNode.innerHTML = snapshot.val().content
+    document.getElementById("form_title").innerText = snapshot.val().name
+    globalID = snapshot.val().qID
+}, function (err) {
+    targetNode.innerText = err;
+    targetNode.innerText += "Please return Home and Login"
+});
 
 function save() {
     firebase.database().ref('/form-list/' + formID)
         .update({
-            content: targetNode.innerHTML
+            content: targetNode.innerHTML,
+            name: document.getElementById("form_title").innerText,
+            qID: globalID
         });
     var currDate = new Date().toLocaleString();
     document.getElementById("lastSaved").innerText = `Last Saved at: ${currDate}`
@@ -90,7 +97,7 @@ function addQuestion(place, parent) {
     var child_btn = document.createElement("button")
     child_btn.classList.add("child-btn")
     child_btn.innerText = "+"
-    child_btn.setAttribute("onClick", "testchild(this)")
+    child_btn.setAttribute("onClick", "addChild(this)")
 
 
     var child_menu = document.createElement("div")
@@ -155,7 +162,7 @@ function addQuestion(place, parent) {
     edit_view.append(p)
 
     var child_condition_select = document.createElement("div")
-    if (parent != -1) {
+    if (parent != -1 && document.getElementById(parent).getElementsByTagName("label").length != 0) {
         child_condition_select.classList.add("child-condition-select")
 
         var condition_p = document.createElement("p")
@@ -171,9 +178,6 @@ function addQuestion(place, parent) {
             option.innerText = answer.innerText
             condition_answers.append(option)
         }
-
-
-
         child_condition_select.append(condition_p, condition_answers)
     }
     edit_view.append(child_condition_select, input)
@@ -215,8 +219,7 @@ function addQuestion(place, parent) {
 
 var form_title = document.getElementById("form_title")
 form_title.onblur = function () {
-    //Save title to firebase
-    console.log("test")
+    save()
 }
 
 function toggleEdit(e) {
@@ -259,13 +262,14 @@ function saveEdit(e) {
     var question = e.parentNode.parentNode.parentNode.parentNode.children
     question[0].classList.toggle("hidden")
     question[2].classList.toggle("hidden")
+    save()
 }
 
 function deleteQuestion(e) {
     e.parentNode.parentNode.parentNode.remove()
 }
 
-function testchild(e) {
+function addChild(e) {
     e.classList.toggle("active")
     e.parentNode.children[1].classList.toggle("expand")
 }

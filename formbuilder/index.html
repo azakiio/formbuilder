@@ -16,12 +16,12 @@
 <body>
     <div class="header">
         <div class="left-buttons">
-            <button onclick=""><i class="fa fa-chevron-left"></i>Home</button>
+            <button onclick="window.location.href='/index.html'"><i class="fa fa-chevron-left"></i>Home</button>
             <button onclick="save()">Save</button>
             <span id="lastSaved"></span>
         </div>
 
-        <h1 id="form_title" contenteditable>Thyroid Cancer Checklist</h1>
+        <h1 id="form_title" contenteditable></h1>
 
         <div class="right-buttons">
             <button><i class="fa fa-share"></i>Share</button>
@@ -32,8 +32,8 @@
 
     <div class="main-container">
         <div class="tab">
-            <a class="tablinks selected" href="#">Edit Form</a>
-            <a class="tablinks" href="results.html">View Results</a>
+            <a id="edit_form" class="tablinks selected">Edit Form</a>
+            <a id="view_results" class="tablinks">View Results</a>
         </div>
 
 

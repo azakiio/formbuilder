@@ -12,7 +12,6 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
 var ref = database.ref("/form-list");
-// ref.on('value', gotData, errData);
 
 
 function gotData(data) {
@@ -75,6 +74,7 @@ function newForm() {
     var data = {
         name: "Untitled",
         content: "",
+        qID: 0,
         creationDate: new Date().toLocaleDateString()
     }
     var link = ref.push(data)

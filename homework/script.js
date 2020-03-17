@@ -27,7 +27,6 @@ const targetNode = document.getElementById('form');
 
 firebase.database().ref('/form-list/' + formID).once('value').then(function (snapshot) {
     targetNode.innerHTML = snapshot.val().content
-    setbtns()
 }, function (err) {
     targetNode.innerText = err;
     targetNode.innerText += "\n\nPlease return Home and Login"
