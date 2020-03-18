@@ -38,6 +38,7 @@ h1 {
     height: auto;
     width: 100%;
     border-radius: 15px;
+    position: relative;
 }
 
 .left-container, .right-container {
@@ -226,38 +227,67 @@ input[type=checkbox]:checked + .label-text{
 /* *************************** */
 
 .comment{
-    width: 36px;
-    height: 36px;
-    border-radius: 18px;
     position: absolute;
-    right: -24px;
-    top: 40%;
+    height: 100%;
+    width: auto;
+    right: -96px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comment-icon{
+    width: 96px;
+    padding: 0px 8px;;
+    height: 36px;
+    border-radius: 4px;
+    color: black;
     background-color: white;
-    border: 1px solid #efefef;
+    border: 1px solid  #efefef;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     font-size: 20px;
+    text-align: center;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
-.comment a{
-   color: black;
+.comment-icon.active{
+    background-color: #efefef;
 }
 
-.comment a:hover{
+.comment-icon.active a{
     color: #3cb3e0;
+}
+
+
+.comment-icon i{
+    margin-right: 8px;
+}
+
+.comment-icon a{
+    color: black;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+}
+
+.comment-icon a:hover{
+    color: #3cb3e0;
+    cursor: pointer;
 }
 
 .comment-box{
     background-color: white;
     display: flex;
     flex-direction: column;
-    width: 300px;
+    min-width: 300px;
+    width: auto;
     padding: 16px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-    position: relative;
+    box-shadow: 0px 15px 90px rgba(115, 115, 115, 0.3);
+    margin-right: 16px;
 }
 
 .comment-box i{
@@ -289,18 +319,20 @@ input[type=checkbox]:checked + .label-text{
 .comment-buttons button{
     font-weight: 500;
     margin-top: 16px;
-    background-color: transparent;
-    border: none;
     font-size: 12px;
-    color: grey;
+    width: auto;
+    padding: 4px 8px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-.main-btn:hover{
-    color: #3cb3e0;
+.main-btn{
+    background-color: #3cb3e0;
+    color: white;
 }
 
 .secondary-btn:hover{
+    background-color: white;
     color: black;
-}
+} 
 
