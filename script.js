@@ -78,7 +78,7 @@ function newForm() {
         creationDate: new Date().toLocaleDateString()
     }
     var link = ref.push(data)
-    window.location.href = `/formbuilder/?k=${link.name}`
+    window.location.href = `/formbuilder/?k=${link.key}`
 }
 
 
