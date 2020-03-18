@@ -1,0 +1,338 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Open Sans";
+    font-size: 14px;
+    line-height: 21px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: normal;
+    margin-right: auto;
+    margin-bottom: 0px;
+}
+
+#instructions {
+    margin-right: auto;
+    margin-bottom: 32px;
+}
+
+.main-container {
+    width: 70vw;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 32px;
+}
+
+.question-container {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    border-radius: 15px;
+    position: relative;
+}
+
+.left-container, .right-container {
+    width: 50%;
+}
+
+/* Left Container */
+/* ********************************* */
+
+.left-container {
+    display: block;
+    padding: 8px 16px 8px 16px;
+    background-color: #d8d8d8;
+}
+
+.left-container p {
+    width: 75%;
+}
+
+.left-container label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.opt-out {
+    float: right; 
+    margin-top: 16px;
+}
+
+.label-text {
+    width: 100px;
+    padding: 4px 8px 4px 8px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 3px;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+}
+
+.opt-out input[type=checkbox] {
+    display: none;
+}
+
+.label-text::before{
+    font-family: FontAwesome;
+    font-weight: 900;
+}
+
+input[type=checkbox] +.label-text::before {
+    content: "\f096";
+}
+
+input[type=checkbox]:checked + .label-text::before{
+    content: "\f14a";
+}
+
+input[type=checkbox]:checked + .label-text{
+    color: #3cb3e0;
+    border: 1px solid #3cb3e0;
+}
+
+.answer {
+    font-size: 12px;
+    color: gray;
+}
+
+.answer input{
+    cursor: not-allowed;
+}
+
+/* Right Container */
+/* ********************************* */
+
+.right-container {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 8px;
+}
+
+.inactive {
+    background-color: #d8d8d8;
+    color: gray;
+}
+
+.inactive input {
+    pointer-events: none;
+}
+
+.right-container p {
+    font-weight: 600;
+}
+
+.clarity-relevance p, .overall-score p{
+    margin-top: 0;
+}
+
+
+.clarity-relevance {
+    width: 60%;
+    text-align: center;
+}
+
+.clarity-relevance {
+    border-right: 1px solid #DFDFDF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 16px;
+}
+
+.clarity-score {
+    margin-bottom: 24px;
+}
+
+.scale {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-end;
+}
+
+.scale label {
+    font-size: 12px;
+}
+
+.scale .score-label input {
+    display: block;
+}
+
+.overall-score {
+    width: 40%;
+    padding: 16px;
+    text-align: left;
+    position: relative;
+}
+
+.overall-score p {
+    text-align: center;
+}
+
+.overall-score label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.overall-score input {
+    margin-right: 8px;
+}
+
+
+/* Progress Bar */
+/* *************************** */
+
+.progress{
+    height: auto;
+    width: 120px;
+    padding: 4px 16px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: fixed;
+    left: 0;
+    top: 200px;
+}
+
+#progress-txt{
+    color: black;
+    font-weight: 600;
+}
+
+.text{
+    color: #6a6a6a;
+    font-weight: 400;
+}
+
+.numbers{
+    font-weight: 600;
+}
+
+
+/* Comment Icon */
+/* *************************** */
+
+.comment{
+    position: absolute;
+    height: 100%;
+    width: auto;
+    right: -96px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comment-icon{
+    width: 96px;
+    padding: 0px 8px;;
+    height: 36px;
+    border-radius: 4px;
+    color: black;
+    background-color: white;
+    border: 1px solid  #efefef;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.comment-icon.active{
+    background-color: #efefef;
+}
+
+.comment-icon.active a{
+    color: #3cb3e0;
+}
+
+
+.comment-icon i{
+    margin-right: 8px;
+}
+
+.comment-icon a{
+    color: black;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+}
+
+.comment-icon a:hover{
+    color: #3cb3e0;
+    cursor: pointer;
+}
+
+.comment-box{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    width: auto;
+    padding: 16px;
+    box-shadow: 0px 15px 90px rgba(115, 115, 115, 0.3);
+    margin-right: 16px;
+}
+
+.comment-box i{
+    position: absolute;
+    float: right;
+    top: 16px;
+    right: 16px;
+}
+
+.comment-box p{
+    margin-top: 0;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.comment-box input{
+    height: 32px;
+    border-radius: 4px;
+    font-size: 12px;
+    border: 1px solid #c9c9c9;
+    box-sizing: border-box;
+    padding-left: 8px;
+}
+
+.comment-buttons{
+    align-self: flex-end;
+}
+
+.comment-buttons button{
+    font-weight: 500;
+    margin-top: 16px;
+    font-size: 12px;
+    width: auto;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.main-btn{
+    background-color: #3cb3e0;
+    color: white;
+}
+
+.secondary-btn:hover{
+    background-color: white;
+    color: black;
+} 
+
