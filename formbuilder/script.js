@@ -250,7 +250,10 @@ function saveEdit(e) {
     if (edit_view.getElementsByTagName("select").length != 0) {
         var answers = edit_view.getElementsByTagName("select")[0]
         question_view.children[1].innerText = `Condition: ${answers.options[answers.selectedIndex].text}`
+    } else {
+        question_view.children[1].innerText = `Condition: Should we add the parent Q?`
     }
+
     if (type != "text") {
         question_view.children[3].innerHTML = ""
         var temp = edit_view.children[3].value.split(/\r?\n/);
