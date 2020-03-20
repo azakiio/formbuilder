@@ -194,16 +194,21 @@ function addQuestion(place, parent) {
 
     if (parent == -1) {
         document.getElementById("form").appendChild(question)
-    } else if (parseInt(document.getElementById(parent).getAttribute("data-childCount")) == 1){
+    } else if (parseInt(document.getElementById(parent).getAttribute("data-childCount")) == 1) {
         document.getElementById(parent).after(question)
     } else {
+        var flag = false
         var childCount = parseInt(document.getElementById(parent).getAttribute("data-childCount"))
         for (var i = childCount; i > 0; i--) {
             var currentID = document.getElementById(`${parent}.${i}`)
             if (currentID != null) {
                 currentID.after(question)
+                flag = true
                 break
             }
+        }
+        if (!flag) {
+            document.getElementById(parent).after(question)
         }
     }
 
@@ -287,4 +292,62 @@ function hideMenu(e) {
 function incrementParent(e) {
     var childCount = parseInt(e.parentNode.parentNode.parentNode.getAttribute("data-childCount"))
     e.parentNode.parentNode.parentNode.setAttribute("data-childCount", ++childCount)
+}
+
+// function decrementParent(e) {
+//     var id = e.parentNode.parentNode.parentNode.id
+//     var parentID = id.substr(0, id.lastIndexOf("."));
+//     var childCount = parseInt(document.getElementById(parentID).getAttribute("data-childCount"))
+//     document.getElementById(parentID).setAttribute("data-childCount", Math.max(--childCount, 0))
+// }
+
+
+function toXML() {
+    var form = document.getElementById("form")
+    var prevLevel = -10
+    var currLevel = null
+    var xml = `<body title="${document.getElementById("form_title").innerText}">`
+    for (var q of form.children) {
+
+        var qID = q.id
+        currLevel = qID.split(".").length
+        var question = q.children[0].children[2].innerText
+        var answers = q.children[0].children[3].innerText.split("\n")
+
+        if (currLevel - prevLevel == 0) {
+            xml += `</Question>`
+        }
+
+        if (currLevel - prevLevel == 1) {
+            xml += `<ChildItems>`
+        }
+
+        if (currLevel - prevLevel <= -1) {
+            var lvlchange = Math.abs(currLevel - prevLevel)
+            xml += `</Question></ChildItems>`.repeat(lvlchange)
+            xml += `</Question>`
+        }
+
+        if (q.getAttribute("name") == "text") {
+            xml += `<Question title="${question}" ID="${qID}">
+        <ResponseField><Response><string val=""/></Response></ResponseField>`
+        }
+
+        if (q.getAttribute("name") != "text") {
+            var list_items = ""
+            for (var item of answers) {
+                list_items += `<ListItem title="${item}"/>`
+            }
+            xml +=
+                `<Question title="${question}" ID="${qID}">
+                <ListField><List>${list_items}</List></ListField>`
+        }
+        prevLevel = currLevel
+    }
+
+    xml += `</ChildItems></Question>`.repeat(currLevel - 1)
+    xml += `</Question></body>`
+    var blob = new Blob([xml], { type: "text/xml" });
+    saveAs(blob, `${document.getElementById("form_title").innerText}.xml`)
+
 }
