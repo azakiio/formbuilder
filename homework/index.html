@@ -14,29 +14,29 @@
 </head>
 
 <body>
-    <div class="progress">
-        <div class="text">
-            <p id="progress-txt">Your Progress</p>
-            <p>COMPLETED</p>
-            <p>OUT OF</p>
+    <div class="progress-box">
+        <div class="progress">
+            <div class="text">
+                <p id="progress-txt">Your Progress</p>
+                <p>COMPLETED</p>
+                <p>OUT OF</p>
+            </div>
+            <div class="numbers">
+                <p>2</p>
+                <p>4</p>
+            </div>
         </div>
-
-        <div class="numbers">
-            <p>0</p>
-            <p>4</p>
-        </div>
+        <button class="save-btn">Save</button>
+        <span id="lastSaved">Last Saved Today</span>
     </div>
 
     <form class="main-container" id="main" onsubmit="event.preventDefault()">
 
         <h1>Thyroid Cancer</h1>
         <p id="instructions">Please vote on the questions below. You can opt-out from any question if you need to.</p>
-        <input type="submit" value="Submit" class="submit-btn">
+        <!-- <button class="submit-btn">Submit</button> -->
+        <!-- <input type="submit" value="Submit" class="submit-btn"> -->
     </form>
-    
-    
-
-
     
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
