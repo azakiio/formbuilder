@@ -117,4 +117,7 @@ function loadQuestions() {
     </div>
 </div>`
     }
+
+    main_container.innerHTML += `<button class="submit-btn">Submit</button>`
+
 }
