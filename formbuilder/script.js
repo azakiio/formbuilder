@@ -249,9 +249,9 @@ function saveEdit(e) {
 
     if (edit_view.getElementsByTagName("select").length != 0) {
         var answers = edit_view.getElementsByTagName("select")[0]
-        question_view.children[1].innerText = `Condition: ${answers.options[answers.selectedIndex].text}`
+        question_view.children[1].innerText = `Child of: ${qID}, Condition: ${answers.options[answers.selectedIndex].text}`
     } else {
-        question_view.children[1].innerText = `Condition: Should we add the parent Q?`
+        question_view.children[1].innerText = `Child of: ${qID}`
     }
 
     if (type != "text") {
