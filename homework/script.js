@@ -31,9 +31,10 @@ firebase.database().ref('/form-list/' + formID).once('value').then(function (sna
     console.log(err)
 });
 
-function submitForm(e) {
-    e.preventDefault()
-    console.log($('form').serialize())
+function submitForm() {
+    firebase.database().ref(`/form-list/${formID}/working-group/${userID}`).update({
+        answers: $('form').serialize()
+    })
 
 }
 
@@ -118,7 +119,7 @@ function loadQuestions() {
 </div>`
     }
 
-    main_container.innerHTML += `<button class="submit-btn">Submit</button>`
+    main_container.innerHTML += `<button onclick="submitForm()" class="submit-btn">Submit</button>`
 
 }
 

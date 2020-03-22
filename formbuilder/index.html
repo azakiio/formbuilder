@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit</title>
+    <link rel="stylesheet" type="text/css" href="results.css">
     <link rel="stylesheet" type="text/css" href="edit.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/7ceee42a74.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 </head>
@@ -25,176 +27,32 @@
         <h1 id="form_title" contenteditable></h1>
 
         <div class="right-buttons">
-            <button><i class="fa fa-share"></i>Share</button>
+            <button onclick="getShared()"><i class="fa fa-share"></i>Share</button>
             <button onclick="toXML()"><i class="fa fa-code"></i>XML</button>
+        </div>
+    </div>
+
+    <div id="share-modal" class="modal">
+        <div class="modal-content">
+            <h2>Share with others</h2>
+            <textarea id="email-list" placeholder="Enter each email address on a new line"></textarea>
+            <i id="close-icon" class="fa fa-times" onclick="closeModal()"></i>
+            <button class="solid-btn" onclick="generateLinks()">Generate Share Links</button>
+            <div id="email-links" class="email-links">
+
+            </div>
         </div>
     </div>
 
 
     <div class="main-container">
         <div class="tab">
-            <a id="edit_form" class="tablinks selected">Edit Form</a>
-            <a id="view_results" class="tablinks">View Results</a>
+            <a id="edit_form" class="tablinks selected" onclick="editView()">Edit Form</a>
+            <a id="view_results" class="tablinks" onclick="resultsView()">View Results</a>
         </div>
 
 
         <div id="form" class="form-container">
-
-            <!-- <div class="question" name="radio">
-
-                <div class="question-view">
-                    <i class="fa fa-pencil" onclick="toggleEdit(this)"></i>
-                    <p name="question">Placeholder</p>
-                    <div name="answers">
-                    </div>
-                </div>
-
-                <div class="add-child">
-                    <button class="child-btn">+</button>
-                    <div class="child-menu">
-                        <p>Add a child question</p>
-                        <a><i class="fa fa-font"></i>Text</a><br>
-                        <a><i class="far fa-dot-circle"></i>Single Select</a><br>
-                        <a><i class="fa fa-check-square"></i>Multi Select</a><br>
-                    </div>
-                </div>
-
-                <div class="edit-view hidden">
-                    <p><i class="far fa-dot-circle"></i>SINGLE SELECT QUESTION</p>
-                    <input type="text" placeholder="Enter your question here">
-                    <textarea placeholder="Enter your answers here"></textarea>
-                    <div class="edit-buttons">
-                        <button class="solid-btn red" onclick="deleteQuestion(this)">Delete</button>
-                        <div>
-                            <button class="outlined-btn" onclick="cancelEdit(this)">Cancel</button>
-                            <button class="solid-btn" onclick="saveEdit(this)">Save</button>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div> -->
-
-
-
-            <!-- <div class="question" name="text">
-
-                <div class="question-view">
-                    <i class="fa fa-pencil" onclick="toggleEdit(this)"></i>
-
-                    <p name="question"></p>
-                    <div name="answers">
-                        <input type="text" class="text-answer" disabled placeholder="Written Answer...">
-                    </div>
-
-                </div>
-
-                <div class="edit-view hidden">
-                    <p><i class="fa fa-font"></i>TEXT QUESTION</p>
-                    <input type="text" placeholder="Enter your question here">
-                    <div class="edit-buttons">
-                        <button class="solid-btn red" onclick="deleteQuestion(this)">Delete</button>
-                        <div>
-                            <button class="outlined-btn" onclick="cancelEdit(this)">Cancel</button>
-                            <button class="solid-btn" onclick="saveEdit(this)">Save</button>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div> -->
-
-            <!-- <div class="question" name="radio">
-
-                <div class="question-view">
-                    <i class="fa fa-pencil" onclick="toggleEdit(this)"></i>
-                    <p name="question">1. This is a parent question</p>
-                    <div name="answers">
-                        <label><input type="radio" disabled>a</label>
-                        <label><input type="radio" disabled>b</label>
-                        <label><input type="radio" disabled>c</label>
-                        <label><input type="radio" disabled>d</label>
-                    </div>
-                </div>
-
-                <div class="add-child">
-                    <button class="child-btn">+</button>
-                    <div class="child-menu">
-                        <p>Add a child question</p>
-                        <a><i class="fa fa-font"></i>Text</a><br>
-                        <a><i class="far fa-dot-circle"></i>Single Select</a><br>
-                        <a><i class="fa fa-check-square"></i>Multi Select</a><br>
-                    </div>
-                </div>
-
-                <div class="edit-view hidden">
-                    <p><i class="far fa-dot-circle"></i>SINGLE SELECT QUESTION</p>
-                    <input type="text" placeholder="Enter your question here">
-                    <textarea placeholder="Enter your answers here"></textarea>
-                    <div class="edit-buttons">
-                        <button class="solid-btn red" onclick="deleteQuestion(this)">Delete</button>
-                        <div>
-                            <button class="outlined-btn" onclick="cancelEdit(this)">Cancel</button>
-                            <button class="solid-btn" onclick="saveEdit(this)">Save</button>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div> -->
-
-            <!-- CHILD QUESTION -->
-
-            <!-- <div class="question" name="radio" id=5>
-
-                <div class="question-view">
-                    <i class="fa fa-pencil" onclick="toggleEdit(this)"></i>
-                    <p class="child-condition"><span>Condition: </span>a</p>
-                    <p name="question">1.1 This is a child question</p>
-                    <div name="answers">
-                        <label><input type="radio" disabled>E</label>
-                        <label><input type="radio" disabled>F</label>
-                        <label><input type="radio" disabled>G</label>
-                    </div>
-                </div>
-
-                <div class="add-child">
-                    <button class="child-btn">+</button>
-                    <div class="child-menu">
-                        <p>Add a child question</p>
-                        <a><i class="fa fa-font"></i>Text</a><br>
-                        <a><i class="far fa-dot-circle"></i>Single Select</a><br>
-                        <a><i class="fa fa-check-square"></i>Multi Select</a><br>
-                    </div>
-                </div>
-
-                <div class="edit-view">
-                    <p><i class="far fa-dot-circle"></i>SINGLE SELECT QUESTION</p>
-                    <div class="child-condition-select">
-                        <p>Show if answered:</p>
-                        <select name="" id="">
-                            <option value="">Select a parent answer</option>
-                            <option value="">a</option>
-                            <option value="">b</option>
-                            <option value="">c</option>
-                            <option value="">d</option>
-                        </select>
-                    </div>
-                    <input type="text" placeholder="Enter your question here">
-                    <textarea placeholder="Enter your answers here"></textarea>
-                    <div class="edit-buttons">
-                        <button class="solid-btn red" onclick="deleteQuestion(this)">Delete</button>
-                        <div>
-                            <button class="outlined-btn" onclick="cancelEdit(this)">Cancel</button>
-                            <button class="solid-btn" onclick="saveEdit(this)">Save</button>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div> -->
-
 
         </div>
 
@@ -205,9 +63,47 @@
                 <button class="solid-btn" onclick="addQuestion('text', '-1')"><i class="fa fa-font"></i>Text</button>
                 <button class="solid-btn" onclick="addQuestion('radio', '-1')"><i class="far fa-dot-circle"></i>Single
                     Select</button>
-                <button class="solid-btn" onclick="addQuestion('checkbox', '-1')"><i class="fa fa-check-square"></i>Multi
+                <button class="solid-btn" onclick="addQuestion('checkbox', '-1')"><i
+                        class="fa fa-check-square"></i>Multi
                     Select</button>
             </div>
+        </div>
+        
+        <div class="filters hidden">
+            <!-- <select name="round" id="">
+                <option value="">Select a round</option>
+                <option value="">Round 1</option>
+                <option value="">Round 2</option>
+                <option value="">Round 3</option>
+            </select> -->
+
+            <select name="participants" id="participants" onchange="updateResults(this.value)">
+                <option disabled selected>Select a participant</option>
+                <option value="all-participants">All participants</option>
+            </select>
+        </div>
+
+        <div class="results-container hidden">
+            <table id="results-table">
+                <thead>
+                    <th class="question-col">Question</th>
+                    <th>Clarity</th>
+                    <th>Relevance</th>
+                    <th>Overall</th>
+                    <th>Comments</th>
+                </thead>
+
+                <tbody id="results-body">
+                    <!-- <tr>
+                        <td>1. Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                        </td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>Include</td>
+                    </tr> -->
+                </tbody>
+            </table>
         </div>
     </div>
 

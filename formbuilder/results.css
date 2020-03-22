@@ -24,7 +24,7 @@ thead th:nth-child(1){
 }
 
 
-thead th:nth-child(4){
+thead th:nth-child(5){
     border-top-right-radius: 4px;
 }
 
@@ -48,7 +48,7 @@ th{
 
 
 .question-col{
-    width: 55%;
+    width: 40%;
 }
 
 table tr td:nth-child(1) {
