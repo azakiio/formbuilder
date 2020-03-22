@@ -112,16 +112,19 @@ i {
 	font-weight: 600;
 }
 
-
 .form-list-head button {
 	background-color: #3cb3e0;
 	color: white;
 	cursor: pointer;
 }
 
-.form-list-item {
+.form-list-item{
+	min-height: 50px;
+	height: auto;
 	background-color: white;
 	display: flex;
+	color: #404040;
+	text-decoration: none;
 	flex-direction: horizontal;
 	justify-content: space-between;
 	align-items: center;
@@ -134,17 +137,25 @@ i {
 	background-color: #e1e1e1;
 }
 
-.form-list-item a{
-	color: black;
-	text-decoration: none;
+.form-name{
+	width: 60%;
+	word-wrap: break-word;
+	cursor: pointer;
 }
 
+.form-date{
+	width: 15%;
+	cursor: pointer;
+}
 
 .form-list-item .del {
 	cursor: pointer;
 	margin-right: 20px;
 }
 
+.del:hover{
+	color: #ff6864;
+}
 
 .log-out {
 	color: #8e8e8e;
