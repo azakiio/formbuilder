@@ -24,6 +24,55 @@ h1 {
     margin-bottom: 32px;
 }
 
+.score-instructions{
+    background-color: white;
+    padding: 8px 16px 16px 16px;
+}
+
+.score-instructions h3{
+    font-weight: 600;
+}
+
+.category{
+    font-weight: 600;
+}
+
+.score-instructions p{
+    font-weight: 600;
+}
+
+.scale-instructions{
+    width:100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.scale-instructions label{
+    width: 10%;
+}
+
+.scale-instructions-label{
+    width: 18%;    
+}
+
+.scale-instructions-label label{
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+
+.score-explanation{
+    font-weight: 400;
+}
+
+.score-number{
+    font-weight: 600;
+    font-size: 16px;
+}
+
 .main-container {
     width: 70vw;
     max-width: 1000px;
