@@ -78,6 +78,10 @@ p {
   font-size: 12px;
   font-weight: normal;
   color: grey;
+  font-family: "Open Sans";
+  position: absolute; 
+  left: 100%; 
+  white-space: pre;
 }
 
 
