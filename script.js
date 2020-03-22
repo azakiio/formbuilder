@@ -22,16 +22,41 @@ function gotData(data) {
     for (var i = 0; i < keys.length; i++) {
         let k = keys[i];
 
-        let outer_div = document.createElement("div")
+        // let outer_div = document.createElement("div")
+        // outer_div.classList.add("form-list-item")
+
+        // let name_p = document.createElement("p")
+
+        // let link_a = document.createElement("a")
+        // link_a.href = `/formbuilder/?k=${k}`
+        // link_a.innerText = forms[k].name;
+
+        // let date_p = document.createElement("p")
+        // date_p.innerText = forms[k].creationDate;
+
+        // let delete_button = document.createElement("span")
+        // delete_button.onclick = () => {
+        //     database.ref("/form-list/" + k).remove()
+        // }
+        // delete_button.classList.add("del")
+        // delete_button.innerText = "\u2715"
+
+        // name_p.append(link_a)
+        // outer_div.append(name_p, date_p, delete_button)
+        // formList_div.append(outer_div)
+
+
+        // New
+        let outer_div = document.createElement("a")
         outer_div.classList.add("form-list-item")
+        outer_div.href = `/formbuilder/?k=${k}`
 
-        let name_p = document.createElement("p")
+        let name_p = document.createElement("label")
+        name_p.classList.add("form-name")
+        name_p.innerText = forms[k].name;
 
-        let link_a = document.createElement("a")
-        link_a.href = `/formbuilder/?k=${k}`
-        link_a.innerText = forms[k].name;
-
-        let date_p = document.createElement("p")
+        let date_p = document.createElement("label")
+        date_p.classList.add("form-date")
         date_p.innerText = forms[k].creationDate;
 
         let delete_button = document.createElement("span")
@@ -39,9 +64,8 @@ function gotData(data) {
             database.ref("/form-list/" + k).remove()
         }
         delete_button.classList.add("del")
-        delete_button.innerText = "\u2715"
+        delete_button.innerHTML = `<i class="fas fa-trash-alt"></i>`
 
-        name_p.append(link_a)
         outer_div.append(name_p, date_p, delete_button)
         formList_div.append(outer_div)
 
