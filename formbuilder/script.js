@@ -459,7 +459,7 @@ function toXML() {
         prevLevel = currLevel
     }
 
-    xml += `</ChildItems></Question>`.repeat(currLevel - 1)
+    xml += `</Question></ChildItems>`.repeat(currLevel - 1)
     xml += `</Question></body>`
     var blob = new Blob([xml], { type: "text/xml" });
     saveAs(blob, `${document.getElementById("form_title").innerText}.xml`)
