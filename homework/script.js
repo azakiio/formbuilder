@@ -122,3 +122,16 @@ function loadQuestions() {
     main_container.innerHTML += `<button onclick="submitForm()" class="submit-btn">Submit</button>`
 
 }
+
+
+function showInstructions(e){
+    document.getElementById("score-instructions").classList.toggle("hidden");
+    e.classList.toggle("oh-blue");
+    console.log(e.innerHTML);
+
+    if (e.innerHTML === `<i class="fas fa-plus-circle" aria-hidden="true"></i>Click to show instructions`) {
+        e.innerHTML = `<i class="fas fa-minus-circle"></i>Click to hide instructions`
+      } else {
+        e.innerHTML = `<i class="fas fa-plus-circle" aria-hidden="true"></i>Click to show instructions`;
+      }
+}
