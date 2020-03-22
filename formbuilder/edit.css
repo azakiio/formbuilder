@@ -78,6 +78,10 @@ p {
   font-size: 12px;
   font-weight: normal;
   color: grey;
+  font-family: "Open Sans";
+  position: absolute; 
+  left: 100%; 
+  white-space: pre;
 }
 
 
@@ -321,7 +325,7 @@ i {
 }
 
 .hidden{
-  display: none;
+  display: none !important;
 }
 
 /*Text Answer*/
@@ -453,3 +457,106 @@ textarea::placeholder {
   color: black;
 }
 
+
+
+/* Share Modal */
+/* ****************** */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #ECECEC;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 24px;
+  border: 1px solid #888;
+  width: 500px; /* Could be more or less, depending on screen size */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 4px;
+  border: none;
+  position: relative;
+}
+
+.modal-content h2{
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 0;
+}
+
+.modal-content textarea{
+  width: 90%;
+  border-radius: 4px;
+  border: 1px solid #c9c9c9;
+  padding: 8px;
+  font-family: "Open Sans";
+  min-height: 50px;
+  vertical-align: text-top;
+  resize: none;
+}
+
+.modal-content p{
+  margin-top: 32px;
+}
+
+
+.modal-content button{
+  margin-top: 16px;
+  align-self: center;
+}
+
+/* The Close Button */
+#close-icon{
+  position: absolute;
+  top: 32px;
+  right: 16px;
+  color: grey;
+  cursor: pointer;
+}
+
+#close-icon:hover{
+  color: black;
+}
+
+.email-links{
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+}
+
+.share-email{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.share-email label{
+  width: 30%;
+  word-wrap: break-word;
+}
+
+.share-email a{
+  color: grey;
+  font-size: 12px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.share-email a:hover{
+  color: #3cb3e0;
+}

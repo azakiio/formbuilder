@@ -23,18 +23,126 @@ var formID = urlParams.get("k")
 const targetNode = document.getElementById('form');
 var globalID = null
 
-document.getElementById("edit_form").href = `/formbuilder/?k=${formID}`
-document.getElementById("view_results").href = `/formbuilder/results.html?k=${formID}`
+function editView() {
+    document.getElementById("edit_form").classList.add("selected");
+    document.getElementById("view_results").classList.remove("selected");
+
+    document.getElementById("form").classList.remove("hidden")
+    document.querySelector(".form-buttons").classList.remove("hidden")
+    document.querySelector(".filters").classList.add("hidden")
+    document.querySelector(".results-container").classList.add("hidden")
 
 
+}
+
+function resultsView() {
+    document.getElementById("edit_form").classList.remove("selected");
+    document.getElementById("view_results").classList.add("selected");
+
+    document.getElementById("form").classList.add("hidden")
+    document.querySelector(".form-buttons").classList.add("hidden")
+    document.querySelector(".filters").classList.remove("hidden")
+    document.querySelector(".results-container").classList.remove("hidden")
+    // viewResults()
+}
+
+// const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length
 firebase.database().ref('/form-list/' + formID).once('value').then(function (snapshot) {
     targetNode.innerHTML = snapshot.val().content
     document.getElementById("form_title").innerText = snapshot.val().name
     globalID = snapshot.val().qID
+
+    var ref = firebase.database().ref(`/form-list/${formID}/working-group`)
+    //var data = {}
+    ref.once('value').then(function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+            var participants = document.getElementById("participants")
+            if (childSnapshot.hasChild("answers")) {
+                //data[childSnapshot.key] = childSnapshot.val()
+                participants.innerHTML += `<option value="${childSnapshot.key}">${childSnapshot.val().email}</option>`
+            }
+        });
+    });
+
 }, function (err) {
     targetNode.innerText = err;
     targetNode.innerText += "Please return Home and Login"
 });
+
+
+function viewResults() {
+    // var results_body = document.getElementById("results-body")
+    // console.log(answers)
+    // for (var question of targetNode.children) {
+    //     var qID = question.id
+    //     var clarity = []
+    //     var relevance = []
+    //     var overall = []
+    //     var comments = []
+    //     for (var item of Object.values(data)) {
+    //         // console.log(item.answers)
+    //         const answerDict = new URLSearchParams(item.answers);
+    //         console.log(answerDict)
+    //         clarity.push(parseInt(answerDict.get(`clarity-${qID}`)))
+    //         relevance.push(parseInt(answerDict.get(`relevance-${qID}`)))
+    //         overall.push(answerDict.get(`overall-${qID}`))
+    //         comments.push(answerDict.get(`${qID}`))
+    //     }
+    //     console.log(clarity)
+    //     console.log(arrAvg(clarity))
+
+    //     let avg_relevance = relevance.reduce((previous, current) => current += previous, 0) / relevance.length;
+
+    //     const newArray = oldArray.filter(function (value) {
+    //         return !Number.isNaN(value);
+    //     });
+
+    //     // let avg_c = clarity.reduce((previous, current) => current += previous) / clarity.length;
+
+    //     var questionhtml = question.children[0].children[2].innerText
+    //     results_body.innerHTML += `<tr>
+    //                                     <td>${questionhtml}
+    //                                     </td>
+    //                                     <td>${1}</td>
+    //                                     <td>${1}</td>
+    //                                     <td>${1} <br> ${2} <br> ${3}</td>
+    //                                     <td>Text</td>
+    //                                 </tr>`
+    // }
+}
+
+
+function updateResults(e) {
+    firebase.database().ref(`/form-list/${formID}/working-group/${e}/answers`).once("value").then(function (snapshot) {
+        var results_body = document.getElementById("results-body")
+        results_body.innerHTML = ''
+        var params = new URLSearchParams(snapshot.val())
+        for (var question of targetNode.children) {
+            var qID = question.id
+            var opt_out = params.get(`opt-out-${qID}`)
+            if (opt_out != "on") {
+                var clarity = parseInt(params.get(`clarity-${qID}`))
+                var relevance = parseInt(params.get(`relevance-${qID}`))
+                var overall = params.get(`overall-${qID}`)
+                var comment = params.get(`comment-${qID}`)
+            } else {
+                var clarity = relevance = overall = comment = "OPTOUT"
+            }
+
+
+            var questionhtml = question.children[0].children[2].innerText
+            results_body.innerHTML += `<tr>
+                                        <td>${questionhtml}
+                                        </td>
+                                        <td>${clarity}</td>
+                                        <td>${relevance}</td>
+                                        <td>${overall}</td>
+                                        <td>${comment}</td>
+                                    </tr>`
+        }
+    });
+}
+
 
 function save() {
     firebase.database().ref('/form-list/' + formID)
@@ -298,12 +406,15 @@ function incrementParent(e) {
 }
 
 // function decrementParent(e) {
-//     var id = e.parentNode.parentNode.parentNode.id
+//     var id = e.parentNode.parentNode.parenntNode.id
 //     var parentID = id.substr(0, id.lastIndexOf("."));
 //     var childCount = parseInt(document.getElementById(parentID).getAttribute("data-childCount"))
 //     document.getElementById(parentID).setAttribute("data-childCount", Math.max(--childCount, 0))
 // }
 
+function share() {
+    document.querySelector(".share").classList.toggle("hidden")
+}
 
 function toXML() {
     var form = document.getElementById("form")
@@ -353,4 +464,71 @@ function toXML() {
     var blob = new Blob([xml], { type: "text/xml" });
     saveAs(blob, `${document.getElementById("form_title").innerText}.xml`)
 
+}
+
+function getShared() {
+    document.getElementById("share-modal").style.display = "block";
+    var ref = firebase.database().ref(`/form-list/${formID}/working-group`)
+    ref.once('value').then(function (snapshot) {
+        var output = document.getElementById("email-links")
+        output.innerHTML = `<p id="share-msg">Click on each link to email it to the receiver:</p>`
+        snapshot.forEach(function (childSnapshot) {
+            var hashmail = childSnapshot.key;
+            var email = childSnapshot.val().email
+            var link = `/homework/?k=${formID}&u=${hashmail}`
+            output.innerHTML += `<div class="share-email">
+                                <label>${email}</label>
+                                <a onclick="copyLink('${link}')"><i class="fas fa-copy"></i>Copy Link</a>
+                                <a href="mailto:${email}?subject=Question Voting&body=Hello, please complete your voting at the following link: ${link}")"><i class="fas fa-paper-plane"></i>Send Email</a>
+                                <a onclick="removeUser('${hashmail}')"><i class="fas fa-user-minus"></i>Remove User</a>
+                                </div>`
+        });
+    });
+};
+
+function generateLinks() {
+    var emails = document.getElementById("email-list").value.split(/\r?\n/);
+    var ref = firebase.database().ref(`/form-list/${formID}/working-group`)
+    ref.once('value').then(function (snapshot) {
+        for (var email of emails) {
+            var hashmail = CryptoJS.MD5(email) + "";
+            if (!snapshot.hasChild(hashmail)) {
+                ref.update({
+                    [hashmail]: {
+                        email: email
+                    }
+                })
+            }
+        }
+        getShared()
+    });
+
+};
+
+function copyLink(str) {
+    // Create new element
+    var el = document.createElement('textarea');
+    // Set value (string to be copied)
+    el.value = str;
+    // Set non-editable to avoid focus and move outside of view
+    el.setAttribute('readonly', '');
+    el.style = { position: 'absolute', left: '-9999px' };
+    document.body.appendChild(el);
+    // Select text inside element
+    el.select();
+    // Copy text to clipboard
+    document.execCommand('copy');
+    // Remove temporary element
+    document.body.removeChild(el);
+}
+
+function removeUser(hashmail) {
+    firebase.database().ref(`/form-list/${formID}/working-group/${hashmail}`).remove()
+    getShared()
+}
+
+
+// When the user clicks on <span> (x), close the modal
+function closeModal() {
+    document.getElementById("share-modal").style.display = "none";
 }
