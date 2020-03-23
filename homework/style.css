@@ -145,6 +145,11 @@ h1 {
 
 .left-container p {
     width: 75%;
+    margin-top: 0;
+}
+
+.child-condition {
+    font-size: 12px;
 }
 
 .left-container label {

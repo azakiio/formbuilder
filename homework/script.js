@@ -120,16 +120,16 @@ function loadQuestions() {
 
     for (var question of formdata.children) {
         var qID = question.id
-        var questionhtml = question.children[0].children[2].innerHTML
-        var answerhtml = question.children[0].children[3].innerHTML
-
-
+        var conditionhtml = question.children[0].children[1].outerHTML
+        var questionhtml = question.children[0].children[2].outerHTML
+        var answerhtml = question.children[0].children[3].outerHTML
         main_container.innerHTML +=
             `<div id="${qID}" class="question-container">
     <div class="left-container">
         <label class="opt-out">
             <input type="checkbox" id="opt-out-${qID}" name="opt-out-${qID}" onchange="updateScores(this)"> <span class="label-text"> Opt Out</span>
         </label>
+        ${conditionhtml}
         ${questionhtml}
         ${answerhtml}
     </div>
