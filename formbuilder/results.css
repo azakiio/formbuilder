@@ -12,11 +12,22 @@
 table{
     width: 100%;
     border-collapse: collapse;
+    font-size: 14px;
 }
 
 thead{
     background-color: #3CB3E0;
     border-radius: 4px 4px 0px 0px;
+}
+
+th{
+    cursor: pointer;
+}
+
+th::after{
+    font-family: FontAwesome;
+    font-weight: 900;
+    content: " \f0dc";
 }
 
 thead th:nth-child(1){
@@ -39,19 +50,38 @@ td, th{
 }
 
 th{
-  width: 15%;
+  /* width: fit-content; */
   position: sticky;
   top: 0;
   color: white;
   background-color: #3CB3E0;
 }
 
-
 .question-col{
-    width: 40%;
+    width: 25%;
 }
 
-table tr td:nth-child(1) {
+.clarity-col, .relevance-col{
+    width: 15%;
+}
+
+.overall-col{
+    width: 20%;
+}
+
+.comment-col{
+    max-width: 25%;
+}
+
+.comment-col::after{
+    content: "";
+}
+
+table tr td:nth-child(1){
+    text-align: left;
+}
+
+table tr td:nth-child(4){
     text-align: left;
 }
 
@@ -70,4 +100,22 @@ table tr td:nth-child(1) {
 	font-family: "Open Sans";
 	border: 1px solid #3CB3E0;
 	margin-left: 8px;
+}
+
+.sorting-asc::after{
+    content: " \f0dd";
+}
+
+.sorting-desc::after{
+    content: " \f0de";
+}
+
+.green{
+    color: #18AD00;
+    font-weight: 600;
+}
+
+.orange{
+    color: #E08A24;
+    font-weight: 600;
 }

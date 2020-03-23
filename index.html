@@ -14,14 +14,14 @@
 </head>
 
 <body>
-    <div id="logged-out" class="main-container">
+    <form id="logged-out" class="main-container" onsubmit="login();return false;">
         <img src="assets/oh-logo.png" alt="oh-logo">
         <h4>SYNOPTIC REPORT BUILDER</h4>
         <p>Please enter your login information below</p>
         <input id="email" type="email" placeholder="Email...">
         <input id="password" type="password" placeholder="Password...">
-        <button class="solid-btn" onclick="login()">Log In</button>
-    </div>
+        <button type="submit" class="solid-btn">Log In</button>
+    </form>
 
 
     <div id="logged-in" class="main-container">

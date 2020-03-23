@@ -24,25 +24,92 @@ var formID = urlParams.get("k")
 var userID = urlParams.get("u")
 const formdata = document.createElement("div")
 
-firebase.database().ref('/form-list/' + formID).once('value').then(function (snapshot) {
+firebase.database().ref(`/form-list/${formID}`).once('value').then(function (snapshot) {
     formdata.innerHTML = snapshot.val().content
+    document.getElementById("form-title").innerText = snapshot.val().name
     loadQuestions()
+    document.querySelector(".numbers").children[1].innerText = formdata.children.length
+
+    var newRef = snapshot.child(`working-group/${userID}`)
+    if (newRef.hasChild("answers")) {
+        var params = new URLSearchParams(newRef.val().answers)
+        for (var param of params) {
+            var question = document.getElementsByName(param[0])
+            for (var answer of question) {
+                if(answer.type == "radio" && answer.value == param[1]){
+                    answer.checked = true
+
+                }
+                else if (answer.type == "text"){
+                    answer.value = param[1]
+                }
+                else if (answer.type == "checkbox"){
+                    answer.checked = true
+                    updateScores(answer)
+                }
+            }
+
+        }
+    }
+    updateOverall()
+
+
+
+
 }, function (err) {
     console.log(err)
 });
 
-function submitForm() {
-    firebase.database().ref(`/form-list/${formID}/working-group/${userID}`).update({
-        answers: $('form').serialize()
+function submitForm(e) {
+    firebase.database().ref(`/form-list/${formID}/working-group`).once("value").then(function(snapshot){
+        if(snapshot.hasChild(userID)){
+            firebase.database().ref(`/form-list/${formID}/working-group/${userID}`).update({
+                answers: $('form').serialize()
+            })
+            var currDate = new Date().toLocaleString();
+            document.getElementById("lastSaved").innerText = `Last Saved at: ${currDate}`
+        
+            if (e.innerText=="Submit")
+            swal(
+                'Thanks for submitting!',
+                'Your answers have been submitted.',
+                'success'
+              )
+        } else {
+            console.log("Broken Link")
+        }
     })
-
 }
 
-function toggleScores(e) {
-    e.parentNode.parentNode.parentNode.children[1].classList.toggle("inactive")
+function updateScores(e) {
+    if (e.checked) {
+        e.parentNode.parentNode.parentNode.children[1].classList.add("inactive")
+    } else {
+        e.parentNode.parentNode.parentNode.children[1].classList.remove("inactive")
+    }
+    updateOverall()
 }
 
-function toggleComment(e){
+
+function updateOverall(){
+    var overalls = document.getElementsByClassName("overall-score")
+    var checkedCount = 0
+    for(var overall of overalls){
+        // console.log(overall.parentNode.parentNode.children[0].children[0].children[0])
+        if(overall.parentNode.parentNode.children[0].children[0].children[0].checked){
+            checkedCount += 1
+        } else{
+            var labels = overall.children[1]
+            for (var label of labels.children){
+                checkedCount += label.children[0].checked ? 1 : 0;
+            }
+        }
+    // console.log(overall, checkedCount)
+    }
+    document.querySelector(".numbers").children[0].innerText = checkedCount
+}
+
+function toggleComment(e) {
     e.classList.toggle("hidden")
     e.parentNode.children[0].classList.toggle("active")
 }
@@ -61,7 +128,7 @@ function loadQuestions() {
             `<div id="${qID}" class="question-container">
     <div class="left-container">
         <label class="opt-out">
-            <input type="checkbox" id="opt-out-${qID}" name="opt-out-${qID}" onclick="toggleScores(this)"> <span class="label-text"> Opt Out</span>
+            <input type="checkbox" id="opt-out-${qID}" name="opt-out-${qID}" onchange="updateScores(this)"> <span class="label-text"> Opt Out</span>
         </label>
         ${questionhtml}
         ${answerhtml}
@@ -96,12 +163,12 @@ function loadQuestions() {
             </div>
         </div>
 
-        <div class="overall-score">
+        <div class="overall-score" onchange="updateOverall()">
             <p>Overall</p>
             <div>
-                <label><input value="include" name="overall-${qID}" type="radio">Include</label>
-                <label><input value="optional" name="overall-${qID}" type="radio">Optional</label>
-                <label><input value="exclude" name="overall-${qID}" type="radio">Do not include</label>
+                <label><input value="Include" name="overall-${qID}" type="radio">Include</label>
+                <label><input value="Optional" name="overall-${qID}" type="radio">Optional</label>
+                <label><input value="Do Not Include" name="overall-${qID}" type="radio">Do not include</label>
             </div>
         </div>
     </div>
@@ -119,19 +186,19 @@ function loadQuestions() {
 </div>`
     }
 
-    main_container.innerHTML += `<button onclick="submitForm()" class="submit-btn">Submit</button>`
+    main_container.innerHTML += `<button onclick="submitForm(this)" class="submit-btn">Submit</button>`
 
 }
 
 
-function showInstructions(e){
+function showInstructions(e) {
     document.getElementById("score-instructions").classList.toggle("hidden");
     e.classList.toggle("oh-blue");
     console.log(e.innerHTML);
 
-    if (e.innerHTML === `<i class="fas fa-plus-circle" aria-hidden="true"></i>Click to show instructions`) {
-        e.innerHTML = `<i class="fas fa-minus-circle"></i>Click to hide instructions`
-      } else {
-        e.innerHTML = `<i class="fas fa-plus-circle" aria-hidden="true"></i>Click to show instructions`;
-      }
+    if (e.innerHTML === `<i class="fas fa-minus-circle" aria-hidden="true"></i>Click to hide instructions`) {
+        e.innerHTML = `<i class="fas fa-plus-circle"></i>Click to show instructions`
+    } else {
+        e.innerHTML = `<i class="fas fa-minus-circle" aria-hidden="true"></i>Click to hide instructions`;
+    }
 }

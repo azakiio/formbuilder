@@ -61,6 +61,7 @@ function gotData(data) {
 
         let delete_button = document.createElement("span")
         delete_button.onclick = () => {
+            outer_div.href = "#";
             database.ref("/form-list/" + k).remove()
         }
         delete_button.classList.add("del")
@@ -97,7 +98,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 function newForm() {
     var data = {
         name: "Untitled",
-        content: "",
+        content: `<p id="initial-msg">No questions have been added yet.</p>`,
         qID: 0,
         creationDate: new Date().toLocaleDateString()
     }
@@ -115,6 +116,9 @@ function login() {
         console.log(error.message)
         window.alert(error.message)
     });
+    
+    document.getElementById("email").value = ""
+    document.getElementById("password").value = ""
 }
 
 function logout() {

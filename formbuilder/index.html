@@ -12,8 +12,8 @@
     <script src="https://kit.fontawesome.com/7ceee42a74.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stupidtable/1.1.3/stupidtable.min.js"></script>
 </head>
 
 <body>
@@ -53,7 +53,7 @@
 
 
         <div id="form" class="form-container">
-
+            
         </div>
 
 
@@ -78,30 +78,22 @@
             </select> -->
 
             <select name="participants" id="participants" onchange="updateResults(this.value)">
-                <option disabled selected>Select a participant</option>
-                <option value="all-participants">All participants</option>
+                <option disabled>Select a participant</option>
+                <option value="all-participants" selected>All Participants</option>
             </select>
         </div>
 
         <div class="results-container hidden">
             <table id="results-table">
                 <thead>
-                    <th class="question-col">Question</th>
-                    <th>Clarity</th>
-                    <th>Relevance</th>
-                    <th>Overall</th>
-                    <th>Comments</th>
+                    <th data-sort="int" class="question-col">Question</th>
+                    <th data-sort="float" class="clarity-col">Clarity</th>
+                    <th data-sort="float" class="relevance-col">Relevance</th>
+                    <th data-sort="int" class="overall-col">Overall</th>
+                    <th class="comment-col">Comments</th>
                 </thead>
 
                 <tbody id="results-body">
-                    <!-- <tr>
-                        <td>1. Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                        </td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>Include</td>
-                    </tr> -->
                 </tbody>
             </table>
         </div>

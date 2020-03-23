@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Form Builder</title>
 </head>
 
@@ -22,38 +23,49 @@
                 <p>OUT OF</p>
             </div>
             <div class="numbers">
-                <p>2</p>
-                <p>4</p>
+                <p>0</p>
+                <p></p>
             </div>
         </div>
-        <button class="save-btn" onclick="submitForm()">Save</button>
-        <span id="lastSaved">Last Saved Today</span>
+        <button class="save-btn" onclick="submitForm(this)">Save</button>
+        <span id="lastSaved"></span>
     </div>
 
     <form class="main-container" id="main" onsubmit="event.preventDefault()">
 
-        <h1>Thyroid Cancer</h1>
+        <h1 id="form-title">Thyroid Cancer</h1>
         <p id="instructions">Please vote on the questions below. You can opt-out from any question if you need to.</p>
-        
-        <a href="#" onclick="showInstructions(this)" class="instructions-toggle"><i class="fas fa-plus-circle"></i>Click to show instructions</a>
+
+        <a href="#" onclick="showInstructions(this)" class="instructions-toggle"><i class="fas fa-plus-circle"></i>Click
+            to show instructions</a>
         <div class="score-instructions hidden" id="score-instructions">
             <h3>Score Instructions</h3>
             <div class="scale-instructions">
-                    <label class="category">Clarity</label>
-                    <div class="scale-instructions-label"><label class="score-number">1</label><label class="score-explanation">Not at all clear</label></div>
-                    <div class="scale-instructions-label"><label class="score-number">2</label><label class="score-explanation">Somewhat unclear</label></div>
-                    <div class="scale-instructions-label"><label class="score-number">3</label><label class="score-explanation">Neutral</label></div>
-                    <div class="scale-instructions-label"><label class="score-number">4</label><label class="score-explanation">Somewhat clear</label></div>
-                    <div class="scale-instructions-label"><label class="score-number">5</label><label class="score-explanation">Very clear</label></div>
+                <label class="category">Clarity</label>
+                <div class="scale-instructions-label"><label class="score-number">1</label><label
+                        class="score-explanation">Not at all clear</label></div>
+                <div class="scale-instructions-label"><label class="score-number">2</label><label
+                        class="score-explanation">Somewhat unclear</label></div>
+                <div class="scale-instructions-label"><label class="score-number">3</label><label
+                        class="score-explanation">Neutral</label></div>
+                <div class="scale-instructions-label"><label class="score-number">4</label><label
+                        class="score-explanation">Somewhat clear</label></div>
+                <div class="scale-instructions-label"><label class="score-number">5</label><label
+                        class="score-explanation">Very clear</label></div>
             </div>
 
             <div class="scale-instructions">
-                    <label class="category">Relevance</label>
-                    <div class="scale-instructions-label"><label class="score-number">1</label><label class="score-explanation">Not at all relevant</label></div>
-                    <div class="scale-instructions-label"><label class="score-number">2</label><label class="score-explanation">Somewhat relevant</label></div>
-                    <div class="scale-instructions-label"><label class="score-number">3</label><label class="score-explanation">Neutral</label></div>
-                    <div class="scale-instructions-label"><label class="score-number">4</label><label class="score-explanation">Somewhat relevant</label></div>
-                    <div class="scale-instructions-label"><label class="score-number">5</label><label class="score-explanation">Very relevant</label></div>
+                <label class="category">Relevance</label>
+                <div class="scale-instructions-label"><label class="score-number">1</label><label
+                        class="score-explanation">Not at all relevant</label></div>
+                <div class="scale-instructions-label"><label class="score-number">2</label><label
+                        class="score-explanation">Somewhat relevant</label></div>
+                <div class="scale-instructions-label"><label class="score-number">3</label><label
+                        class="score-explanation">Neutral</label></div>
+                <div class="scale-instructions-label"><label class="score-number">4</label><label
+                        class="score-explanation">Somewhat relevant</label></div>
+                <div class="scale-instructions-label"><label class="score-number">5</label><label
+                        class="score-explanation">Very relevant</label></div>
             </div>
         </div>
         <!-- <button class="submit-btn">Submit</button> -->

@@ -5,6 +5,8 @@ $('textarea').each(function () {
     this.style.height = (this.scrollHeight) + 'px';
 });
 
+$("#results-table").stupidtable();
+
 var firebaseConfig = {
     apiKey: "AIzaSyAltMfeb-pzQUfQz-pfTnh2jfwBFVzhPq0",
     authDomain: "ohforms.firebaseapp.com",
@@ -43,22 +45,22 @@ function resultsView() {
     document.querySelector(".form-buttons").classList.add("hidden")
     document.querySelector(".filters").classList.remove("hidden")
     document.querySelector(".results-container").classList.remove("hidden")
-    // viewResults()
+    updateResults("all-participants")
 }
 
 // const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length
+var answers = []
 firebase.database().ref('/form-list/' + formID).once('value').then(function (snapshot) {
     targetNode.innerHTML = snapshot.val().content
     document.getElementById("form_title").innerText = snapshot.val().name
     globalID = snapshot.val().qID
 
     var ref = firebase.database().ref(`/form-list/${formID}/working-group`)
-    //var data = {}
     ref.once('value').then(function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
             var participants = document.getElementById("participants")
             if (childSnapshot.hasChild("answers")) {
-                //data[childSnapshot.key] = childSnapshot.val()
+                answers.push(childSnapshot.val().answers)
                 participants.innerHTML += `<option value="${childSnapshot.key}">${childSnapshot.val().email}</option>`
             }
         });
@@ -69,78 +71,98 @@ firebase.database().ref('/form-list/' + formID).once('value').then(function (sna
     targetNode.innerText += "Please return Home and Login"
 });
 
-
-function viewResults() {
-    // var results_body = document.getElementById("results-body")
-    // console.log(answers)
-    // for (var question of targetNode.children) {
-    //     var qID = question.id
-    //     var clarity = []
-    //     var relevance = []
-    //     var overall = []
-    //     var comments = []
-    //     for (var item of Object.values(data)) {
-    //         // console.log(item.answers)
-    //         const answerDict = new URLSearchParams(item.answers);
-    //         console.log(answerDict)
-    //         clarity.push(parseInt(answerDict.get(`clarity-${qID}`)))
-    //         relevance.push(parseInt(answerDict.get(`relevance-${qID}`)))
-    //         overall.push(answerDict.get(`overall-${qID}`))
-    //         comments.push(answerDict.get(`${qID}`))
-    //     }
-    //     console.log(clarity)
-    //     console.log(arrAvg(clarity))
-
-    //     let avg_relevance = relevance.reduce((previous, current) => current += previous, 0) / relevance.length;
-
-    //     const newArray = oldArray.filter(function (value) {
-    //         return !Number.isNaN(value);
-    //     });
-
-    //     // let avg_c = clarity.reduce((previous, current) => current += previous) / clarity.length;
-
-    //     var questionhtml = question.children[0].children[2].innerText
-    //     results_body.innerHTML += `<tr>
-    //                                     <td>${questionhtml}
-    //                                     </td>
-    //                                     <td>${1}</td>
-    //                                     <td>${1}</td>
-    //                                     <td>${1} <br> ${2} <br> ${3}</td>
-    //                                     <td>Text</td>
-    //                                 </tr>`
-    // }
-}
-
-
 function updateResults(e) {
-    firebase.database().ref(`/form-list/${formID}/working-group/${e}/answers`).once("value").then(function (snapshot) {
+    if (e == "all-participants") {
         var results_body = document.getElementById("results-body")
         results_body.innerHTML = ''
-        var params = new URLSearchParams(snapshot.val())
+        var question_index = 0
         for (var question of targetNode.children) {
+            question_index++
             var qID = question.id
-            var opt_out = params.get(`opt-out-${qID}`)
-            if (opt_out != "on") {
-                var clarity = parseInt(params.get(`clarity-${qID}`))
-                var relevance = parseInt(params.get(`relevance-${qID}`))
-                var overall = params.get(`overall-${qID}`)
-                var comment = params.get(`comment-${qID}`)
-            } else {
-                var clarity = relevance = overall = comment = "OPTOUT"
+            var clarity = []
+            var relevance = []
+            var overall = {
+                "Include": 0,
+                "Optional": 0,
+                "Do Not Include": 0
             }
-
-
+            var comments = []
+            for (var i = 0; i < answers.length; i++) {
+                var params = new URLSearchParams(answers[i])
+                var opt_out = params.get(`opt-out-${qID}`)
+                if (opt_out != "on") {
+                    if (parseInt(params.get(`clarity-${qID}`))) {
+                        clarity.push(parseInt(params.get(`clarity-${qID}`)))
+                    }
+                    if (parseInt(params.get(`relevance-${qID}`))) {
+                        relevance.push(parseInt(params.get(`relevance-${qID}`)))
+                    }
+                    if (params.get(`overall-${qID}`)) {
+                        overall[params.get(`overall-${qID}`)] += 1
+                    }
+                    if(params.get(`comment-${qID}`)){
+                        comments.push(params.get(`comment-${qID}`))
+                    }
+                }
+            }
+            var clarity_avg = clarity.length ? (clarity.reduce((a, b) => (a + b)) / clarity.length).toFixed(2) : "0"
+            var relevance_avg = relevance.length ? (relevance.reduce((a, b) => (a + b)) / relevance.length).toFixed(2) : "0"
+            var overall_size = Object.values(overall).reduce((a, b) => a + b, 0)
+            var overall_include = overall_size != 0 ? (100 * overall["Include"] / overall_size).toFixed() : "0"
+            var overall_optional = overall_size != 0 ? (100 * overall["Optional"] / overall_size).toFixed() : "0"
+            var overall_exclude = overall_size != 0 ? (100 * overall["Do Not Include"] / overall_size).toFixed() : "0"
+            var max_overall = Math.max(parseInt(overall_include), parseInt(overall_optional), parseInt(overall_exclude))
+            
+            var overall_color = (max_overall < 60) ? "orange" : "green"
+            var clarity_color = (parseFloat(clarity_avg) > 3.00) ? "green" : "orange"
+            var relevance_color = (parseFloat(relevance_avg) > 3.00) ? "green" : "orange"
+            // console.log(clarity_avg, relevance_avg, overall_include, overall_optional, overall_exclude)
             var questionhtml = question.children[0].children[2].innerText
             results_body.innerHTML += `<tr>
-                                        <td>${questionhtml}
-                                        </td>
+                                    <td data-sort-value="${question_index}">${questionhtml}</td>
+                                    <td class="${clarity_color}">${clarity_avg}</td>
+                                    <td class="${relevance_color}">${relevance_avg}</td>
+                                    <td class="${overall_color}" data-sort-value="${max_overall}">
+                                        Include: <span>${overall_include}%</span>
+                                        <br>
+                                        Optional: ${overall_optional}%
+                                        <br>
+                                        Exclude: ${overall_exclude}% 
+                                    </td>
+                                    <td>${comments}</td>
+                                </tr>`
+        }
+    } else {
+        firebase.database().ref(`/form-list/${formID}/working-group/${e}/answers`).once("value").then(function (snapshot) {
+            var results_body = document.getElementById("results-body")
+            results_body.innerHTML = ''
+            var params = new URLSearchParams(snapshot.val())
+            var i = 0
+            for (var question of targetNode.children) {
+                i++
+                var qID = question.id
+                var opt_out = params.get(`opt-out-${qID}`)
+                if (opt_out != "on") {
+                    var clarity = parseInt(params.get(`clarity-${qID}`)) ? parseInt(params.get(`clarity-${qID}`)) : ""
+                    var relevance = parseInt(params.get(`relevance-${qID}`)) ? parseInt(params.get(`relevance-${qID}`)) : ""
+                    var overall = params.get(`overall-${qID}`) ? params.get(`overall-${qID}`) : ""
+                    var comment = params.get(`comment-${qID}`) ? params.get(`comment-${qID}`) : ""
+                } else {
+                    var clarity = relevance = overall = "Opted Out"
+                    var comment = params.get(`comment-${qID}`) ? params.get(`comment-${qID}`) : ""
+                }
+
+                var questionhtml = question.children[0].children[2].innerText
+                results_body.innerHTML += `<tr>
+                                        <td data-sort-value="${i}">${questionhtml}</td>
                                         <td>${clarity}</td>
                                         <td>${relevance}</td>
                                         <td>${overall}</td>
                                         <td>${comment}</td>
                                     </tr>`
-        }
-    });
+            }
+        });
+    }
 }
 
 
@@ -157,6 +179,9 @@ function save() {
 
 
 function addQuestion(place, parent) {
+    if(document.getElementById("initial-msg")){
+        document.getElementById("initial-msg").remove()
+    }
     var question = document.createElement("div")
     question.classList.add("question")
     question.setAttribute("name", place)
@@ -200,7 +225,6 @@ function addQuestion(place, parent) {
 
     var add_child = document.createElement("div")
     add_child.classList.add("add-child")
-    // add_child.setAttribute("onmouseout", "hideMenu(this)")
 
     var child_btn = document.createElement("button")
     child_btn.classList.add("child-btn")
@@ -319,14 +343,6 @@ function addQuestion(place, parent) {
             document.getElementById(parent).after(question)
         }
     }
-
-    window.scrollTo(0, document.body.scrollHeight);
-    $('textarea').each(function () {
-        this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-    }).on('input', function () {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
-    });
 }
 
 
@@ -357,9 +373,9 @@ function saveEdit(e) {
 
     if (edit_view.getElementsByTagName("select").length != 0) {
         var answers = edit_view.getElementsByTagName("select")[0]
-        question_view.children[1].innerText = `Child of: ${qID}, Condition: ${answers.options[answers.selectedIndex].text}`
+        question_view.children[1].innerText = `Condition: ${answers.options[answers.selectedIndex].text}`
     } else {
-        question_view.children[1].innerText = `Child of: ${qID}`
+        question_view.children[1].classList.add("hidden")
     }
 
     if (type != "text") {
@@ -471,14 +487,14 @@ function getShared() {
     var ref = firebase.database().ref(`/form-list/${formID}/working-group`)
     ref.once('value').then(function (snapshot) {
         var output = document.getElementById("email-links")
-        output.innerHTML = `<p id="share-msg">Click on each link to email it to the receiver:</p>`
+        output.innerHTML = `<p id="share-msg">Share with:</p>`
         snapshot.forEach(function (childSnapshot) {
             var hashmail = childSnapshot.key;
             var email = childSnapshot.val().email
-            var link = `/homework/?k=${formID}&u=${hashmail}`
+            var link = `${window.location.origin}/homework/?k=${formID}&u=${hashmail}`
             output.innerHTML += `<div class="share-email">
                                 <label>${email}</label>
-                                <a onclick="copyLink('${link}')"><i class="fas fa-copy"></i>Copy Link</a>
+                                <a onclick="copyLink('${link}',this)"><i class="fas fa-copy"></i>Copy Link</a>
                                 <a href="mailto:${email}?subject=Question Voting&body=Hello, please complete your voting at the following link: ${link}")"><i class="fas fa-paper-plane"></i>Send Email</a>
                                 <a onclick="removeUser('${hashmail}')"><i class="fas fa-user-minus"></i>Remove User</a>
                                 </div>`
@@ -505,21 +521,17 @@ function generateLinks() {
 
 };
 
-function copyLink(str) {
-    // Create new element
+function copyLink(str, e) {
     var el = document.createElement('textarea');
-    // Set value (string to be copied)
     el.value = str;
-    // Set non-editable to avoid focus and move outside of view
     el.setAttribute('readonly', '');
     el.style = { position: 'absolute', left: '-9999px' };
     document.body.appendChild(el);
-    // Select text inside element
     el.select();
-    // Copy text to clipboard
     document.execCommand('copy');
-    // Remove temporary element
-    document.body.removeChild(el);
+    el.remove();
+    e.innerHTML = `<i class="fas fa-copy"></i> Copied!`
+    setTimeout(function(){e.innerHTML = `<i class="fas fa-copy"></i> Copy Link`;}, 2000);
 }
 
 function removeUser(hashmail) {

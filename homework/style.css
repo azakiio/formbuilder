@@ -181,6 +181,14 @@ h1 {
     text-align: center;
 }
 
+.swal-footer{
+   text-align: center;
+}
+
+.swal-button{
+    background-color: #3cb3e0;
+}
+
 .opt-out input[type=checkbox] {
     display: none;
 }
