@@ -559,7 +559,7 @@ function getShared() {
             output.innerHTML += `<div class="share-email">
                                 <label>${email}</label>
                                 <a onclick="copyLink('${link}',this)"><i class="fas fa-copy"></i>Copy Link</a>
-                                <a href="mailto:${email}?subject=Question Voting&body=Hello, please complete your voting at the following link: ${link}")"><i class="fas fa-paper-plane"></i>Send Email</a>
+                                <a href="mailto:${email}?subject=Question Voting&body=Hello, please complete your voting at the following link: ${link}\n${document.getElementById('instructions').value}"><i class="fas fa-paper-plane"></i>Send Email</a>
                                 <a onclick="removeUser('${hashmail}')"><i class="fas fa-user-minus"></i>Remove User</a>
                                 </div>`;
         });
