@@ -364,7 +364,7 @@ function addQuestion(place, parent) {
             condition_answers.append(option);
         }
         var option = document.createElement("option");
-        option.innerText = "Parent is not Answered";
+        option.innerText = "None of the Above";
         condition_answers.append(option);
         child_condition_select.append(condition_p, condition_answers);
     }
