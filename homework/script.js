@@ -197,9 +197,10 @@ function showInstructions(e) {
     e.classList.toggle("oh-blue");
     console.log(e.innerHTML);
 
-    if (e.innerHTML === `<i class="fas fa-minus-circle" aria-hidden="true"></i>Click to hide instructions`) {
-        e.innerHTML = `<i class="fas fa-plus-circle"></i>Click to show instructions`
+    if (e.innerHTML === `<i class="fas fa-minus-circle" aria-hidden="true"></i>Click to hide voting criteria`) {
+        e.innerHTML = `<i class="fas fa-plus-circle"></i>Click
+        to show voting criteria`
     } else {
-        e.innerHTML = `<i class="fas fa-minus-circle" aria-hidden="true"></i>Click to hide instructions`;
+        e.innerHTML = `<i class="fas fa-minus-circle" aria-hidden="true"></i>Click to hide voting criteria`;
     }
 }
