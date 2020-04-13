@@ -27,6 +27,7 @@ const formdata = document.createElement("div")
 firebase.database().ref(`/form-list/${formID}`).once('value').then(function (snapshot) {
     formdata.innerHTML = snapshot.val().content
     document.getElementById("form-title").innerText = snapshot.val().name
+    document.getElementById("custom_instructions").innerText = snapshot.val().instructions
     loadQuestions()
     document.querySelector(".numbers").children[1].innerText = formdata.children.length
 
